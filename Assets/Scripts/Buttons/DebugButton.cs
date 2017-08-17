@@ -5,10 +5,11 @@ using UnityEngine;
 public class DebugButton : Button {
 
 	public string message;
+	public GameObject lamp;
 
 	public void OnMouseDown()
 	{
-		network.AddTask(new DebugTask("cat", 2, message));
+		network.AddTask(new DebugTask("debug", message, 2, lamp));
 	}
 
 }
