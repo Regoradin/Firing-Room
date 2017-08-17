@@ -8,7 +8,7 @@ public class DebugButton : Button {
 
 	public void OnMouseDown()
 	{
-		network.AddTask(new DebugTask("cat", 1, message));
+		network.AddTask(new DebugTask("cat", 2, message));
 	}
 
 }

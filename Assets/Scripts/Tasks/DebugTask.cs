@@ -14,7 +14,7 @@ public class DebugTask : Task {
 
 	public override void Activate()
 	{
-		Debug.Log(message);
+		Debug.Log(message + " at " + Time.time);
 	}
 
 }
