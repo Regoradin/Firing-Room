@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Network : MonoBehaviour {
+public class Network : NetworkBehaviour {
 
 	private float delay = 2;
 	public float Delay
@@ -15,10 +16,10 @@ public class Network : MonoBehaviour {
 
 	private List<Dataline> datalines;
 
-	//The following fields are data storage fields, which can be modified by incoming Data and read by any interested monitors or readouts in mission control.
-	[HideInInspector]
+	//The following fields are data storage fields, which can be modified by incoming Data and read by any interested displays or readouts in mission control.
+	[HideInInspector][SyncVar]
 	public string debug_message = "debug";
-	[HideInInspector]
+	[HideInInspector][SyncVar]
 	public float longitude, latitude, altitude;
 
 

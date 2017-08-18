@@ -21,12 +21,4 @@ public class DebugTask : Task {
 		Debug.Log(message + " at " + Time.time);
 		lamp.GetComponent<DebugLight>().glow_color = Color.red;
 	}
-
-	[Command]
-	public void CmdActivate()
-	{
-		Debug.Log(message + " at " + Time.time);
-		lamp.GetComponent<DebugLight>().glow_color = Color.red;
-	}
-
 }
