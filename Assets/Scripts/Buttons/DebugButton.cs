@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class DebugButton : Button {
 
@@ -9,7 +10,12 @@ public class DebugButton : Button {
 
 	public void OnMouseDown()
 	{
-		network.AddTask(new DebugTask("debug", message, 2, lamp));
+		CmdAddTask();
 	}
 
+	[Command]
+	private void CmdAddTask()
+	{
+		network.AddTask(new DebugTask("debug", message, 2, lamp));
+	}
 }
