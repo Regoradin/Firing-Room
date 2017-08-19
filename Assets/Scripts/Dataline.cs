@@ -18,15 +18,18 @@ public class Dataline : MonoBehaviour
 	private bool downloading = false;
 	private List<Data> data_on_line;
 
-	private void Start()
+	private void Awake()
 	{
-		network = GetComponentInParent<Network>();
-
 		task_buffer = new List<Task>();
 		tasks_on_line = new List<Task>();
 
 		data_buffer = new List<Data>();
 		data_on_line = new List<Data>();
+	}
+
+	private void Start()
+	{
+		network = GetComponentInParent<Network>();
 	}
 
 	private void Update()
@@ -124,7 +127,7 @@ public class Dataline : MonoBehaviour
 
 	private IEnumerator ActivateTask(Task task)
 	{
-		yield return new WaitForSeconds(network.Delay + task.size);
+		yield return new WaitForSeconds(network.delay + task.size);
 		tasks_on_line.Remove(task);
 		task.Activate();
 	}
@@ -173,7 +176,7 @@ public class Dataline : MonoBehaviour
 
 	private IEnumerator ActivateData(Data data)
 	{
-		yield return new WaitForSeconds(network.Delay + data.size);
+		yield return new WaitForSeconds(network.delay + data.size);
 		data_on_line.Remove(data);
 		data.Activate(network);
 	}

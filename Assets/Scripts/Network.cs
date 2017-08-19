@@ -5,14 +5,7 @@ using UnityEngine.Networking;
 
 public class Network : NetworkBehaviour {
 
-	private float delay = 2;
-	public float Delay
-	{
-		get
-		{
-			return delay;
-		}
-	}
+	public float delay = 2;
 
 	private List<Dataline> datalines;
 
@@ -23,7 +16,7 @@ public class Network : NetworkBehaviour {
 	public float longitude, latitude, altitude;
 
 
-	private void Start()
+	private void Awake()
 	{
 		datalines = new List<Dataline>();
 		foreach (Dataline dataline in GetComponents<Dataline>())
