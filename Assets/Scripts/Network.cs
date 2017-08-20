@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class Network : NetworkBehaviour {
 
-	public float delay = 2;
+	public float delay = 2; //if delay is -1, then there is no connection, but datas and tasks will still be added onto buffers.
 
 	private List<Dataline> datalines;
 

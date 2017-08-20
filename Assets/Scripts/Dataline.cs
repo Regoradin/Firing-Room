@@ -105,17 +105,20 @@ public class Dataline : MonoBehaviour
 	/// </summary>
 	private void Upload()
 	{
-		if (task_buffer.Count > 0)
+		if (network.delay != -1)
 		{
-			uploading = true;
+			if (task_buffer.Count > 0)
+			{
+				uploading = true;
 
-			Task task_to_upload = task_buffer[0];
-			tasks_on_line.Add(task_to_upload);
-			task_buffer.Remove(task_to_upload);
-			
+				Task task_to_upload = task_buffer[0];
+				tasks_on_line.Add(task_to_upload);
+				task_buffer.Remove(task_to_upload);
 
-			Invoke("FinishUpload", task_to_upload.size);
-			StartCoroutine(ActivateTask(task_to_upload));
+
+				Invoke("FinishUpload", task_to_upload.size);
+				StartCoroutine(ActivateTask(task_to_upload));
+			}
 		}
 	}
 
@@ -154,17 +157,20 @@ public class Dataline : MonoBehaviour
 	/// </summary>
 	private void Download()
 	{
-		if (data_buffer.Count > 0)
+		if (network.delay != -1)
 		{
-			downloading = true;
+			if (data_buffer.Count > 0)
+			{
+				downloading = true;
 
-			Data data_to_download = data_buffer[0];
-			data_on_line.Add(data_to_download);
-			data_buffer.Remove(data_to_download);
+				Data data_to_download = data_buffer[0];
+				data_on_line.Add(data_to_download);
+				data_buffer.Remove(data_to_download);
 
 
-			Invoke("FinishDownload", data_to_download.size);
-			StartCoroutine(ActivateData(data_to_download));
+				Invoke("FinishDownload", data_to_download.size);
+				StartCoroutine(ActivateData(data_to_download));
+			}
 		}
 	}
 
