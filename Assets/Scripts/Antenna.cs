@@ -1,8 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Antenna : MonoBehaviour {
+public class Antenna : NetworkBehaviour {
+
+	[SyncVar(hook = "SetTarget")]
+	public SyncListFloat target;
+	
 
 	public float latitude, longitude, altitude;
 	public float range_latitude, range_longitude;
@@ -20,8 +25,10 @@ public class Antenna : MonoBehaviour {
 
 	public float delay_multiplier = 1f;
 
-	public float LAT, LONG, ALT;
-	public float TLAT, TLONG, TALT;
+	private void SetTarget(SyncListFloat target)
+	{
+		Target(target[0], target[1], target[2]);
+	}
 
 	private void Awake()
 	{
@@ -29,19 +36,13 @@ public class Antenna : MonoBehaviour {
 		latitude = 1f;
 		longitude = 1f;
 		altitude = 1f;
-
-		manager = GetComponentInParent<AntennaManager>();
 	}
 
 	private void Start()
 	{
+		manager = GetComponentInParent<AntennaManager>();
+
 		manager.RegisterAntenna(this);
-
-		latitude = LAT;
-		longitude = LONG;
-		altitude = ALT;
-
-		Target(TLAT, TLONG, TALT);
 	}
 
 	private void Update()
