@@ -5,20 +5,20 @@ using UnityEngine.Networking;
 
 public class PlayerAuthSetter : NetworkBehaviour {
 
-	private NetworkIdentity light_net;
+	private List<NetworkIdentity> player_controls;
 
 	void Start()
 	{
-		light_net = GameObject.Find("Debug Button").GetComponent<NetworkIdentity>();
-
-		CmdAssignAuthority();
+		foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Debug Control"))
+		{
+			CmdAssignAuthority(obj.GetComponent<NetworkIdentity>());
+		}
 	}
 
 	[Command]
-	void CmdAssignAuthority()
+	void CmdAssignAuthority(NetworkIdentity net_id)
 	{
-		Debug.Log("Assigning Authority");
-		light_net.RemoveClientAuthority(light_net.clientAuthorityOwner);
-		light_net.AssignClientAuthority(connectionToClient);
+		net_id.RemoveClientAuthority(net_id.clientAuthorityOwner);
+		net_id.AssignClientAuthority(connectionToClient);
 	}
 }

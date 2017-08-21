@@ -9,7 +9,6 @@ public class DebugTask : Task {
 	private string message;
 	private GameObject lamp;
 
-
 	public DebugTask(string category, string message, float size, GameObject lamp) : base(category, size)
 	{
 		this.message = message;

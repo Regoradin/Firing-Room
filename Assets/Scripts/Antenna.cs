@@ -5,8 +5,13 @@ using UnityEngine.Networking;
 
 public class Antenna : NetworkBehaviour {
 
-	[SyncVar(hook = "SetTarget")]
-	public SyncListFloat target;
+	public SyncListFloat target
+	{
+		set
+		{
+			SetTarget(value);
+		}
+	}
 	
 
 	public float latitude, longitude, altitude;
@@ -27,11 +32,13 @@ public class Antenna : NetworkBehaviour {
 
 	private void SetTarget(SyncListFloat target)
 	{
+		Debug.Log("sETTING TARGET");
 		Target(target[0], target[1], target[2]);
 	}
 
 	private void Awake()
 	{
+		target = new SyncListFloat();
 		//Eventually have some way to figure all this out... or fake it.
 		latitude = 1f;
 		longitude = 1f;
