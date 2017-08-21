@@ -38,20 +38,28 @@ public class AntennaManager : MonoBehaviour {
 	/// </summary>
 	public void CalculateDelay()
 	{
-		List<float> possible_path_delays = new List<float>();
+		List<float[]> possible_path_delays = new List<float[]>();
 
 		//assembles a list of the delays from each complete path from a home antenna to the ship
 		foreach (Antenna home_ant in home_antennas)
 		{
 			float path_delay = 0f;
+			float channels = home_ant.channels;
+
 			Antenna act_ant = home_ant;
 
 			while (act_ant.connected_ant != null && !act_ant.connected_ant.is_home_antenna && !act_ant.is_ship_antenna)
 			{
 				path_delay += act_ant.CalculateLinkDelay();
+
+				if(act_ant.connected_ant.channels <= channels)
+				{
+					channels = act_ant.connected_ant.channels;
+				}
+
 				if (act_ant.connected_ant.is_ship_antenna)
 				{
-					possible_path_delays.Add(path_delay);
+					possible_path_delays.Add(new float[2] {path_delay, channels});
 				}
 
 				act_ant = act_ant.connected_ant;
@@ -66,17 +74,21 @@ public class AntennaManager : MonoBehaviour {
 		}
 		else
 		{
-			float shortest = possible_path_delays[0];
-			foreach (float path in possible_path_delays)
+			float shortest_delay = possible_path_delays[0][0];
+			float lowest_channels = possible_path_delays[0][1];
+			foreach (float[] path in possible_path_delays)
 			{
-				if (path < shortest)
+				if (path[0] < shortest_delay)
 				{
-					shortest = path;
+					shortest_delay = path[0];
+					lowest_channels = path[1];
 				}
 			}
-			network.delay = shortest;
+			network.delay = shortest_delay;
+			network.Channels = (int)lowest_channels;
 		}
 		Debug.Log("Calculated delay to be " + network.delay);
+		Debug.Log("Calculated " + network.Channels + " active channels");
 
 	}
 

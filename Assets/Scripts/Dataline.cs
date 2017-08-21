@@ -5,7 +5,7 @@ using UnityEngine;
 public class Dataline : MonoBehaviour
 {
 
-	public bool active;
+	public bool active = true;
 	private Network network;
 	public bool is_uplink = true;
 	public List<string> categories_enabled;

@@ -9,6 +9,30 @@ public class Network : NetworkBehaviour {
 
 	private List<Dataline> datalines;
 
+	private int channels;
+	public int Channels
+	{
+		get
+		{
+			return channels;
+		}
+		set
+		{
+			channels = value;
+			for(int i = 0; i < datalines.Count; i++)
+			{
+				if(i < channels)
+				{
+					datalines[i].active = true;
+				}
+				else
+				{
+					datalines[i].active = false;
+				}
+			}
+		}
+	}
+
 	//The following fields are data storage fields, which can be modified by incoming Data and read by any interested displays or readouts in mission control.
 	[HideInInspector][SyncVar]
 	public string debug_message = "debug";
