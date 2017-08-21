@@ -38,37 +38,38 @@ public class AntennaManager : MonoBehaviour {
 	/// </summary>
 	public void CalculateDelay()
 	{
-		Debug.Log("Got to here");
 		List<float> possible_path_delays = new List<float>();
 
 		//assembles a list of the delays from each complete path from a home antenna to the ship
-		Debug.Log("homeant count " + home_antennas.Count);
 		foreach (Antenna home_ant in home_antennas)
 		{
 			float path_delay = 0f;
 			Antenna act_ant = home_ant;
 
-			while (act_ant.connected_ant != null && !act_ant.connected_ant.is_home_antenna)
+			while (act_ant.connected_ant != null && !act_ant.connected_ant.is_home_antenna && !act_ant.is_ship_antenna)
 			{
 				path_delay += act_ant.CalculateLinkDelay();
-			}
-			if (act_ant.is_ship_antenna)
-			{
-				possible_path_delays.Add(path_delay);
+				if (act_ant.connected_ant.is_ship_antenna)
+				{
+					possible_path_delays.Add(path_delay);
+				}
+
+				act_ant = act_ant.connected_ant;
 			}
 		}
-		Debug.Log("point 1");
+
 		//finds the shortest one and sets that as the delay
-		if(possible_path_delays.Count == 0)
+		if (possible_path_delays.Count == 0)
 		{
 			network.delay = -1f;
+			Debug.Log("There are no paths to the ship");
 		}
 		else
 		{
 			float shortest = possible_path_delays[0];
-			foreach(float path in possible_path_delays)
+			foreach (float path in possible_path_delays)
 			{
-				if(path < shortest)
+				if (path < shortest)
 				{
 					shortest = path;
 				}

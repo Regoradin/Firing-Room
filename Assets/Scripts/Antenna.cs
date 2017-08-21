@@ -41,8 +41,6 @@ public class Antenna : MonoBehaviour {
 		longitude = LONG;
 		altitude = ALT;
 
-		Debug.Log("check1");
-		Debug.Log(manager.acceptable_error);
 		Target(TLAT, TLONG, TALT);
 	}
 
@@ -75,7 +73,6 @@ public class Antenna : MonoBehaviour {
 	{
 		//Currently this will instantly switch antenna target, it might be worth it to add some sort of travel time
 		connected_ant = TryConnect(target_latitude, target_longitude, target_altitude);
-
 		manager.CalculateDelay();
 	}
 
