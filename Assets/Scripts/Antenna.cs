@@ -5,8 +5,13 @@ using UnityEngine.Networking;
 
 public class Antenna : NetworkBehaviour {
 
-	[SyncVar]
-	public SyncListFloat target;
+	public SyncListFloat target
+	{
+		set
+		{
+			SetTarget(value);
+		}
+	}
 	
 
 	public float latitude, longitude, altitude;
@@ -25,7 +30,7 @@ public class Antenna : NetworkBehaviour {
 
 	public float delay_multiplier = 1f;
 
-	private void SetTarget(SyncListFloat.Operation op, int index)
+	private void SetTarget(SyncListFloat target)
 	{
 		Debug.Log("sETTING TARGET");
 		Target(target[0], target[1], target[2]);
@@ -33,11 +38,11 @@ public class Antenna : NetworkBehaviour {
 
 	private void Awake()
 	{
-		Debug.Log("Initializing things");
-		//Antenna starts pointing at itself
 		target = new SyncListFloat();
-
-		target.Callback = SetTarget;
+		//Eventually have some way to figure all this out... or fake it.
+		latitude = 1f;
+		longitude = 1f;
+		altitude = 1f;
 	}
 
 	private void Start()
@@ -75,11 +80,7 @@ public class Antenna : NetworkBehaviour {
 	public void Target(float target_latitude, float target_longitude, float target_altitude)
 	{
 		//Currently this will instantly switch antenna target, it might be worth it to add some sort of travel time
-		Antenna targeted_ant = TryConnect(target_latitude, target_longitude, target_altitude);
-		if(targeted_ant != this)
-		{
-			connected_ant = targeted_ant;
-		}
+		connected_ant = TryConnect(target_latitude, target_longitude, target_altitude);
 		manager.CalculateDelay();
 	}
 
