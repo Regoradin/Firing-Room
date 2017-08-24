@@ -27,17 +27,19 @@ public class Antenna : NetworkBehaviour {
 
 	private void SetTarget(SyncListFloat.Operation op, int index)
 	{
-		Debug.Log("sETTING TARGET");
-		Target(target[0], target[1], target[2]);
+		if (target.Count == 3)
+		{
+			Target(target[0], target[1], target[2]);
+		}
 	}
 
 	private void Awake()
 	{
-		Debug.Log("Initializing things");
 		//Antenna starts pointing at itself
-		target = new SyncListFloat();
+		target = new SyncListFloat() { latitude, longitude, altitude };
 
 		target.Callback = SetTarget;
+
 	}
 
 	private void Start()

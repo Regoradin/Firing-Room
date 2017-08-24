@@ -19,15 +19,14 @@ public class ChangeAntennaTargetTask : Task
 
 	public override void Activate()
 	{
-		antenna.target = new SyncListFloat { target_lat, target_long, target_alt };
-		//antenna.target.Insert(0, target_lat);
-		//antenna.target.Insert(1, target_long);
-		//antenna.target.Insert(2, target_alt);
-		Debug.Log("Activating task");
-		//antenna.target.Clear();
-		//antenna.target.Add(target_lat);
-		//antenna.target.Add(target_long);
-		//antenna.target.Add(target_alt);
+		antenna.target.Add(target_lat);
+		antenna.target.Add(target_long);
+		antenna.target.Add(target_alt);
+
+		for (int i = 0; i < 3; i++)
+		{
+			antenna.target.RemoveAt(0);
+		}
 	}
 
 }
