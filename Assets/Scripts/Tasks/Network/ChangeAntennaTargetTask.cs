@@ -19,14 +19,7 @@ public class ChangeAntennaTargetTask : Task
 
 	public override void Activate()
 	{
-		antenna.target.Add(target_lat);
-		antenna.target.Add(target_long);
-		antenna.target.Add(target_alt);
-
-		for (int i = 0; i < 3; i++)
-		{
-			antenna.target.RemoveAt(0);
-		}
+		antenna.target = new Vector3(target_lat, target_long, target_alt);
 	}
 
 }

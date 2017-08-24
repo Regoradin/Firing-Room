@@ -6,9 +6,9 @@ using UnityEngine.Networking;
 public class Antenna : NetworkBehaviour {
 
 	
-	[HideInInspector]
-	[SyncVar]
-	public SyncListFloat target;
+	//[HideInInspector]
+	[SyncVar(hook="SetTarget")]
+	public Vector3 target;
 	
 	public float latitude, longitude, altitude;
 	public float range_latitude, range_longitude;
@@ -26,21 +26,9 @@ public class Antenna : NetworkBehaviour {
 	public Antenna connected_ant;
 
 
-	private void SetTarget(SyncListFloat.Operation op, int index)
+	private void SetTarget(Vector3 target)
 	{
-		if (target.Count == 3)
-		{
-			Target(target[0], target[1], target[2]);
-		}
-	}
-
-	private void Awake()
-	{
-		//Antenna starts pointing at itself
-		target = new SyncListFloat() { latitude, longitude, altitude };
-
-		target.Callback = SetTarget;
-
+			Target(target.x, target.y, target.z);
 	}
 
 	private void Start()
