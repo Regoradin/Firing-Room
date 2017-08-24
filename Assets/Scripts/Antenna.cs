@@ -5,17 +5,19 @@ using UnityEngine.Networking;
 
 public class Antenna : NetworkBehaviour {
 
+	
+	[HideInInspector]
 	[SyncVar]
 	public SyncListFloat target;
 	
-
 	public float latitude, longitude, altitude;
 	public float range_latitude, range_longitude;
 	public float max_altitude;
 
-	public bool is_moving;
 	public int channels;
+	public float delay_multiplier = 1f;
 
+	public bool is_moving;
 	public bool is_home_antenna;
 	public bool is_ship_antenna;
 
@@ -23,7 +25,6 @@ public class Antenna : NetworkBehaviour {
 	[HideInInspector]
 	public Antenna connected_ant;
 
-	public float delay_multiplier = 1f;
 
 	private void SetTarget(SyncListFloat.Operation op, int index)
 	{
