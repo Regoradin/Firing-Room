@@ -9,15 +9,21 @@ public class TimeUpdater : NetworkBehaviour {
 	public float delay;
 
 	private float last_message_time = 0;
-	
-	void Update () {
+
+	void Update() {
 		if (isServer)
 		{
 			if (Time.time >= last_message_time + delay)
 			{
-				network.AddData(new DebugData(Time.time.ToString(), "debug", .1f));
-				last_message_time = Time.time;
+				CmdAddData();
 			}
 		}
+	}
+
+	[Command]
+	private void CmdAddData()
+	{
+		network.AddData(new DebugData(Time.time.ToString(), "debug", .1f));
+		last_message_time = Time.time;
 	}
 }

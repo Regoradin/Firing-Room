@@ -11,8 +11,11 @@ public class FuelSystemToggle : Button {
 
 	private void OnMouseDown()
 	{
-		CmdAddTask(!state);
-		state = !state;
+		if (hasAuthority)
+		{
+			CmdAddTask(!state);
+			state = !state;
+		}
 	}
 
 	[Command]

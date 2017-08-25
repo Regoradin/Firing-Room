@@ -9,8 +9,11 @@ public class EngineThrottle : Throttle {
 
 	new private void OnMouseDrag()
 	{
-		base.OnMouseDrag();
-		CmdAddTask(level);
+		if (hasAuthority)
+		{
+			base.OnMouseDrag();
+			CmdAddTask(level);
+		}
 	}
 
 	[Command]

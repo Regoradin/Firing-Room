@@ -17,6 +17,13 @@ public class Engine : NetworkBehaviour {
 
 	public float max_thrust;
 	private float current_thrust = 0;
+	public float Current_thrust
+	{
+		get
+		{
+			return current_thrust;
+		}
+	}
 	private float target_thrust;
 
 	public float thrust_increment;
@@ -116,7 +123,6 @@ public class Engine : NetworkBehaviour {
 				current_thrust = limited_thrust;
 			}
 
-			Debug.Log(current_thrust);
 			rb.AddForceAtPosition(Vector3.up * current_thrust, engine_position);
 
 			//deplete fuel

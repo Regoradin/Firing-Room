@@ -10,7 +10,10 @@ public class ChangeAntennaTargetButton : Button {
 
 	public void OnMouseDown()
 	{
-		CmdAddTask();
+		if (hasAuthority)
+		{
+			CmdAddTask();
+		}
 	}
 
 	[Command]

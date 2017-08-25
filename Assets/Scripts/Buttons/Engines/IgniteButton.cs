@@ -9,7 +9,10 @@ public class IgniteButton : Button {
 
 	private void OnMouseDown()
 	{
-		CmdAddTask();
+		if (hasAuthority)
+		{
+			CmdAddTask();
+		}
 	}
 
 	[Command]

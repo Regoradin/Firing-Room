@@ -184,7 +184,7 @@ public class Dataline : MonoBehaviour
 	{
 		yield return new WaitForSeconds(network.delay + data.size);
 		data_on_line.Remove(data);
-		data.Activate(network);
+		data.Activate();
 	}
 
 }
