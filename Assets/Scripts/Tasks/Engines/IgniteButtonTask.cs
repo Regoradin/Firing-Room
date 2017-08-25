@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IgniteButtonTask : MonoBehaviour {
+public class IgniteButtonTask : Task {
 
-	// Use this for initialization
-	void Start () {
-		
+	private Engine engine;
+
+	public IgniteButtonTask(Engine engine):base("Engines", 3)
+	{
+		this.engine = engine;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public override void Activate()
+	{
+		engine.ignited = true;
 	}
 }
