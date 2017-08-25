@@ -20,6 +20,11 @@ public class AntennaManager : MonoBehaviour {
 		ship_antennas = new List<Antenna>();
 	}
 
+	private void Start()
+	{
+		CalculateDelay();
+	}
+
 	public void RegisterAntenna(Antenna antenna)
 	{
 		antennas.Add(antenna);

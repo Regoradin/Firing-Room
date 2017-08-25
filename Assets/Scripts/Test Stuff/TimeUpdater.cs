@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class TimeUpdater : MonoBehaviour {
+public class TimeUpdater : NetworkBehaviour {
 
 	public Network network;
 	public float delay;
@@ -10,10 +11,13 @@ public class TimeUpdater : MonoBehaviour {
 	private float last_message_time = 0;
 	
 	void Update () {
-		if (Time.time >= last_message_time + delay)
+		if (isServer)
 		{
-			network.AddData(new DebugData(Time.time.ToString(), "debug", .1f));
-			last_message_time = Time.time;
+			if (Time.time >= last_message_time + delay)
+			{
+				network.AddData(new DebugData(Time.time.ToString(), "debug", .1f));
+				last_message_time = Time.time;
+			}
 		}
 	}
 }

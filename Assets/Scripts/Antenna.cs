@@ -28,7 +28,7 @@ public class Antenna : NetworkBehaviour {
 
 	private void SetTarget(Vector3 target)
 	{
-			Target(target.x, target.y, target.z);
+		Target(target.x, target.y, target.z);
 	}
 
 	private void Start()
@@ -36,6 +36,8 @@ public class Antenna : NetworkBehaviour {
 		manager = GetComponentInParent<AntennaManager>();
 
 		manager.RegisterAntenna(this);
+
+		SetTarget(Vector3.zero);
 	}
 
 	private void Update()
