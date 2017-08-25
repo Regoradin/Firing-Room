@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class MeterDisplay : NetworkBehaviour
+public class MeterDisplay : FloatDisplay
 {
-	//[HideInInspector]
-	[SyncVar(hook = "SetLevel")]
-	public float level;
-
 	private float min_movement;
 	public float max_movement;
 	private float range;
 
-	private void SetLevel(float new_level)
+	protected override void SetLevel(float new_level)
 	{
 		if (new_level > 1)
 		{

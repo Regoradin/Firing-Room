@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeterData : Data {
+public class FloatData : Data {
 
-	List<MeterDisplay> displays;
+	List<FloatDisplay> displays;
 	private float level;
 
-	public MeterData(List<MeterDisplay> displays, float level, string category, float size) : base(category, size)
+	public FloatData(List<FloatDisplay> displays, float level, string category, float size) : base(category, size)
 	{
 		this.displays = displays;
 		this.level = level;
@@ -16,7 +16,7 @@ public class MeterData : Data {
 
 	public override void Activate()
 	{
-		foreach(MeterDisplay display in displays)
+		foreach(FloatDisplay display in displays)
 		{
 			display.level = level;
 		}

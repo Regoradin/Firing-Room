@@ -6,23 +6,13 @@ using UnityEngine.Networking;
 public class EngineThrustReporter : Reporter {
 
 	public Engine engine;
-	public List<MeterDisplay> displays;
+	public List<FloatDisplay> displays;
 
-	public float delay;
-	private float last_message_time = 0;
-
-	private void Update()
+	protected override void Report()
 	{
-		if (isServer)
-		{
-			if (Time.time >= last_message_time + delay)
-			{
-				last_message_time = Time.time;
+		float thrust_level = engine.Current_thrust / engine.max_thrust;
+		network.AddData(new FloatData(displays, thrust_level, "Engines", .1f));
 
-				float thrust_level = engine.Current_thrust / engine.max_thrust;
-				network.AddData(new MeterData(displays, thrust_level, "Engines", .1f));
-			}
-		}
 	}
 
 }
