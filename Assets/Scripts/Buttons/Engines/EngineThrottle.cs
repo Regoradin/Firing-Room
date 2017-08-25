@@ -10,12 +10,12 @@ public class EngineThrottle : Throttle {
 	new private void OnMouseDrag()
 	{
 		base.OnMouseDrag();
-		CmdAddTask();
+		CmdAddTask(level);
 	}
 
 	[Command]
-	private void CmdAddTask()
+	private void CmdAddTask(float level)
 	{
-		_net.AddTask(new EngineThrottleTask(level, engine));
+		_net.AddTask(new EngineThrottleTask(engine, level));
 	}
 }

@@ -15,7 +15,7 @@ public class DebugLight : NetworkBehaviour {
 	
 	public void SetGlow(Color color)
 	{
-		Debug.Log("Color changing, hook hooked");
+		Debug.Log("Setting color, hook hoooked");
 		mat.SetColor("_EmissionColor", color);
 		glow_color = color;
 	}

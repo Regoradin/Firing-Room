@@ -19,13 +19,13 @@ public class Engine : NetworkBehaviour {
 
 	private void FixedUpdate()
 	{
-		Debug.Log("current thrust: " + current_thrust);
 		rb.AddForce(Vector3.up * current_thrust);
 	}
 
-	public void SetThrust(float level)
+	public void SetThrust(float new_level)
 	{
-		current_thrust = max_thrust * level;
+		level = new_level;
+		current_thrust = max_thrust * new_level;
 	}
 
 }
