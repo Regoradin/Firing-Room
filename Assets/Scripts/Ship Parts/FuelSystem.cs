@@ -12,7 +12,17 @@ public class FuelSystem : NetworkBehaviour {
 	[SyncVar(hook = "TogglePump")]
 	public bool pump_on = false;
 
+	public float max_fuel;
+	//[HideInInspector]
+	public float fuel;
+	public float pool_rate;
+
 	private Engine engine;
+
+	private void Awake()
+	{
+		fuel = max_fuel;
+	}
 
 	private void Start()
 	{
