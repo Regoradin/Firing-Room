@@ -68,14 +68,14 @@ public class Engine : NetworkBehaviour {
 
 		foreach (FuelSystem fuel in LH2)
 		{
-			if(fuel.valve_open && fuel.pump_on && fuel.fuel > 0)
+			if(fuel.valve_open && fuel.pump_on && fuel.Fuel > 0)
 			{
 				active_LH2.Add(fuel);
 			}
 		}
 		foreach (FuelSystem fuel in LOX)
 		{
-			if (fuel.valve_open && fuel.pump_on && fuel.fuel > 0)
+			if (fuel.valve_open && fuel.pump_on && fuel.Fuel > 0)
 			{
 				active_LOX.Add(fuel);
 			}
@@ -90,7 +90,6 @@ public class Engine : NetworkBehaviour {
 		{
 			if(pooled > 0)
 			{
-				Debug.Log("Exploding with force " + pooled * pooled_force_modifier);
 				rb.AddExplosionForce(pooled, engine_position, pooled);
 				pooled = 0;
 			}
@@ -117,14 +116,17 @@ public class Engine : NetworkBehaviour {
 				current_thrust = limited_thrust;
 			}
 
+			Debug.Log(current_thrust);
 			rb.AddForceAtPosition(Vector3.up * current_thrust, engine_position);
+
+			//deplete fuel
 			foreach(FuelSystem fuel in active_LH2)
 			{
-				fuel.fuel -= current_thrust / active_LH2.Count;
+				fuel.Fuel -= current_thrust / active_LH2.Count;
 			}
 			foreach(FuelSystem fuel in active_LOX)
 			{
-				fuel.fuel -= LOX_to_LH2_ratio * (current_thrust / active_LH2.Count);
+				fuel.Fuel -= LOX_to_LH2_ratio * (current_thrust / active_LH2.Count);
 			}
 
 			if (Mathf.Approximately(current_thrust, 0))
@@ -139,11 +141,11 @@ public class Engine : NetworkBehaviour {
 				if (fuel.valve_open)
 				{
 					pooled += fuel.pool_rate * LOX_to_LH2_ratio;
-					fuel.fuel -= fuel.pool_rate * LOX_to_LH2_ratio;
+					fuel.Fuel -= fuel.pool_rate * LOX_to_LH2_ratio;
 					if (fuel.pump_on)
 					{
 						pooled += fuel.pool_rate * LOX_to_LH2_ratio;
-						fuel.fuel -= fuel.pool_rate * LOX_to_LH2_ratio;
+						fuel.Fuel -= fuel.pool_rate * LOX_to_LH2_ratio;
 					}
 				}
 			}
@@ -152,11 +154,11 @@ public class Engine : NetworkBehaviour {
 				if (fuel.valve_open)
 				{
 					pooled += fuel.pool_rate;
-					fuel.fuel -= fuel.pool_rate;
+					fuel.Fuel -= fuel.pool_rate;
 					if (fuel.pump_on)
 					{
 						pooled += fuel.pool_rate;
-						fuel.fuel -= fuel.pool_rate;
+						fuel.Fuel -= fuel.pool_rate;
 					}
 				}
 			}

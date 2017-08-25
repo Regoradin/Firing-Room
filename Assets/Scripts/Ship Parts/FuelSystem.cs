@@ -13,8 +13,19 @@ public class FuelSystem : NetworkBehaviour {
 	public bool pump_on = false;
 
 	public float max_fuel;
-	//[HideInInspector]
-	public float fuel;
+	private float fuel;
+	public float Fuel
+	{
+		get { return fuel; }
+		set
+		{
+			fuel = value;
+			if (fuel <= 0)
+			{
+				engine.CheckFuelSystems();
+			}
+		}
+	}
 	public float pool_rate;
 
 	private Engine engine;
