@@ -75,7 +75,6 @@ public class AntennaManager : MonoBehaviour {
 		if (possible_path_delays.Count == 0)
 		{
 			network.delay = -1f;
-			Debug.Log("There are no paths to the ship");
 		}
 		else
 		{
@@ -92,8 +91,6 @@ public class AntennaManager : MonoBehaviour {
 			network.delay = shortest_delay;
 			network.Channels = (int)lowest_channels;
 		}
-		Debug.Log("Calculated delay to be " + network.delay);
-		Debug.Log("Calculated " + network.Channels + " active channels");
 
 	}
 
