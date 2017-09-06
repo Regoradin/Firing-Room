@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class RotationController : MonoBehaviour {
+public class RotationController : NetworkBehaviour {
 
 	private RotationCalculator rot_calc;
 
 	public Transform ship_transform;
 
 	public Vector3 rotation_speed;
+	[SyncVar][HideInInspector]
 	public Vector3 target_rotation;
-
 
 	private void Start()
 	{
