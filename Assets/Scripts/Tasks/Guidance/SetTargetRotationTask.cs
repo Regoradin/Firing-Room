@@ -8,7 +8,7 @@ public class SetTargetRotationTask : Task {
 	private RotationController rot_controller;
 	private Vector3 target_rotation;
 
-	public SetTargetRotationTask(RotationController rot_controller, Vector3 target_rotation):base("Guidance", 2)
+	public SetTargetRotationTask(RotationController rot_controller, Vector3 target_rotation):base("Guidance", 4)
 	{
 		this.target_rotation = target_rotation;
 		this.rot_controller = rot_controller;
@@ -17,7 +17,6 @@ public class SetTargetRotationTask : Task {
 	public override void Activate()
 	{
 		rot_controller.target_rotation = target_rotation;
-		Debug.Log("Task Activated");
 	}
 
 }

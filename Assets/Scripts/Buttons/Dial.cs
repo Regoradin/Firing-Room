@@ -11,6 +11,7 @@ public class Dial : Button {
 	public float min_value;
 
 	private float value;
+	public float Value { get { return value; } }
 
 	private void OnMouseOver()
 	{
@@ -29,7 +30,7 @@ public class Dial : Button {
 	//Rotates around the local Y axis
 	protected void ScrollUp(float scroll_amount)
 	{
-		transform.Rotate(Vector3.right * scroll_increment);
+		transform.Rotate(Vector3.up * scroll_increment);
 		value += value_increment;
 		if (value >= max_value)
 		{
@@ -39,7 +40,7 @@ public class Dial : Button {
 
 	protected void ScrollDown(float scroll_amount)
 	{
-		transform.Rotate(Vector3.right * -scroll_increment);
+		transform.Rotate(Vector3.up * -scroll_increment);
 		value -= value_increment;
 		if (value <= min_value)
 		{

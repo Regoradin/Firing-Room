@@ -57,7 +57,6 @@ public class RotationController : NetworkBehaviour {
 		}
 
 		ship_transform.Rotate(new Vector3(x_rot, y_rot, z_rot));
-		Debug.Log("Rotating by " + x_rot + " " + y_rot + " " + z_rot);
 	}
 
 }

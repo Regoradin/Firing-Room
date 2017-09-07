@@ -27,7 +27,6 @@ public class RotationCalculator : MonoBehaviour {
 		transform.rotation = Quaternion.LookRotation(rb.velocity);
 
 		current_rotation = CalculateRotation();
-		Debug.Log("current_rotation " + current_rotation);
 	}
 
 	private Vector3 CalculateRotation()

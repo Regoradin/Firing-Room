@@ -6,11 +6,13 @@ using UnityEngine.Networking;
 public class SetTargetRotationButton : Button {
 
 	public RotationController rotation_controller;
-	public Vector3 target_rotation;
+
+	public Dial x_dial, y_dial, z_dial;
 
 	private void OnMouseDown()
 	{
-		CmdAddTask(target_rotation);
+		CmdAddTask(new Vector3(x_dial.Value, y_dial.Value, z_dial.Value));
+		Debug.Log(new Vector3(x_dial.Value, y_dial.Value, z_dial.Value));
 	}
 
 	[Command]
