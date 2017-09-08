@@ -16,7 +16,7 @@ public class SetTargetRotationTask : Task {
 
 	public override void Activate()
 	{
-		rot_controller.target_rotation = target_rotation;
+		rot_controller.Target_rotation = target_rotation;
 	}
 
 }
