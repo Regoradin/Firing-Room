@@ -26,7 +26,8 @@ public class RotationController : NetworkBehaviour {
 	}
 
 	//if maintain_target is set to true, the rotation of the ship will be kept constant through velocity changes. If it is set to false, then the ship won't rotate once it has hit it's target rotation.
-	private bool maintain_target = false;
+	[SyncVar][HideInInspector]
+	public bool maintain_target = false;
 	private bool hit_target = true;
 
 	private void Start()
@@ -36,7 +37,7 @@ public class RotationController : NetworkBehaviour {
 
 	private void FixedUpdate()
 	{
-		if (!hit_target)
+		if (!hit_target || maintain_target)
 		{
 			hit_target = true;
 
@@ -77,11 +78,6 @@ public class RotationController : NetworkBehaviour {
 				{
 					z_rot = rotation_speed.z;
 				}
-			}
-
-			if (maintain_target)
-			{
-				hit_target = false;
 			}
 
 			ship_transform.Rotate(new Vector3(x_rot, y_rot, z_rot));
