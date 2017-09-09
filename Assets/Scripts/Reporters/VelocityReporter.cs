@@ -7,6 +7,8 @@ public class VelocityReporter : Reporter {
 	public List<FloatDisplay> displays;
 
 	private Rigidbody rb;
+	[HideInInspector]
+	public Rigidbody reference_rb;  //the rigidbody that has the reference 0 velocity;
 
 	private void Awake()
 	{
@@ -15,7 +17,14 @@ public class VelocityReporter : Reporter {
 
 	protected override void Report()
 	{
-		network.AddData(new FloatData(displays, rb.velocity.magnitude, "Guidance", .1f));
+
+		float calculated_velocity = rb.velocity.magnitude;
+		if(reference_rb != null)
+		{
+			calculated_velocity = (rb.velocity - reference_rb.velocity).magnitude;
+		}
+
+		network.AddData(new FloatData(displays, calculated_velocity, "Guidance", .1f));
 	}
 
 }
