@@ -47,9 +47,4 @@ public class Dial : Button {
 			value = min_value;
 		}
 	}
-
-	protected virtual void ValueChange()
-	{
-		Debug.Log("Dial " + name + " got changed to " + value);
-	}
 }
