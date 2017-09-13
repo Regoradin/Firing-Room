@@ -13,16 +13,18 @@ public class TestStaging : NetworkBehaviour {
 		rb = GetComponent<Rigidbody>();
 	}
 
-	private void OnConnectedToServer()
+	public override void OnStartClient()
 	{
 		Debug.Log("Connecting Client");
 		FixedJoint joint = gameObject.AddComponent<FixedJoint>();
 		joint.connectedBody = connected_body;
+
+		rb.AddForce(Vector3.up * 20);
+
 	}
 
 	// Use this for initialization
 	void Start () {
-		rb.AddForce(Vector3.up * 20);
 	}
 	
 	// Update is called once per frame

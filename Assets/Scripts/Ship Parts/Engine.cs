@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Engine : NetworkBehaviour {
+public class Engine : NetworkBehaviour, IStageable {
 
 	private Rigidbody rb;
 
@@ -51,6 +51,7 @@ public class Engine : NetworkBehaviour {
 
 	private void Start()
 	{
+		Debug.Log("Starting Engine");
 		foreach (FuelSystem fuel in GetComponentsInChildren<FuelSystem>())
 		{
 			if (fuel.is_LOX)
@@ -66,6 +67,12 @@ public class Engine : NetworkBehaviour {
 		max_fuel_systems = LH2.Count > LOX.Count ? LOX.Count : LH2.Count;
 
 		CheckFuelSystems();
+	}
+
+	public void Stage()
+	{
+		Debug.Log("Making a new Engine");
+		Engine new_engine = Instantiate(this);
 	}
 
 	public void CheckFuelSystems()
