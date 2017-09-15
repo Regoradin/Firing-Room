@@ -30,9 +30,25 @@ public class RotationController : NetworkBehaviour {
 	public bool maintain_target = false;
 	private bool hit_target = true;
 
+	private List<RCS> rcss;
+
 	private void Start()
 	{
 		rot_calc = GetComponentInChildren<RotationCalculator>();
+
+		rcss = new List<RCS>();
+		rcss.AddRange(GetComponentsInChildren<RCS>());
+	}
+
+	public void CheckActiveRCS()
+	{
+		foreach(RCS rcs in rcss)
+		{
+			if (rcs.active && rcs.fueled)
+			{
+				rotation_speed += rcs.rotation_speed;
+			}
+		}
 	}
 
 	private void FixedUpdate()
@@ -78,6 +94,10 @@ public class RotationController : NetworkBehaviour {
 				{
 					z_rot = rotation_speed.z;
 				}
+			}
+			foreach(RCS rcs in rcss)
+			{
+				rcs.ConsumeFuel(rotation_speed);
 			}
 
 			ship_transform.Rotate(new Vector3(x_rot, y_rot, z_rot));
