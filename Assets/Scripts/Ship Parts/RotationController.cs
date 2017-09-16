@@ -42,6 +42,7 @@ public class RotationController : NetworkBehaviour {
 
 	public void CheckActiveRCS()
 	{
+		rotation_speed = Vector3.zero;
 		foreach(RCS rcs in rcss)
 		{
 			if (rcs.active && rcs.fueled)
