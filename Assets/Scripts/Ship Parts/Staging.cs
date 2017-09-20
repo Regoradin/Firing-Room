@@ -8,7 +8,7 @@ public class Staging : NetworkBehaviour
 	public List<Rigidbody> connected_bodies;
 
 	private List<FixedJoint> joints;
-
+	
 	[SyncVar(hook = "Stage")]
 	public bool connected = true;
 
