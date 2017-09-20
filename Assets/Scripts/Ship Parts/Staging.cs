@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class Staging : NetworkBehaviour
 {
 	public List<Rigidbody> connected_bodies;
+	public List<Staging> next_stages;   //every stage down the tree will be staged, but not actually brake the joints.
 
 	private List<FixedJoint> joints;
 	
@@ -45,6 +46,34 @@ public class Staging : NetworkBehaviour
 					}
 				}
 			}
+			
+			foreach(Staging staging in next_stages)
+			{
+				staging.FakeStage(false);
+			}
 		}
 	}
+
+	public void FakeStage(bool b)
+	{
+		//like a normal stage, but doesn't break the joints
+		connected = b;
+		if (!connected)
+		{
+			foreach (MonoBehaviour script in GetComponentsInChildren<MonoBehaviour>())
+			{
+				if (!(script is NetworkIdentity))
+				{
+					Destroy(script);
+				}
+			}
+			foreach (Staging staging in next_stages)
+			{
+				staging.FakeStage(false);
+			}
+		}
+	}
+		
+	
+
 }
