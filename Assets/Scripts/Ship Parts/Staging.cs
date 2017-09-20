@@ -28,9 +28,10 @@ public class Staging : NetworkBehaviour
 
 	}
 
-	private void Stage(bool b)
+	public void Stage(bool b)
 	{
-		if (!b)
+		connected = b;
+		if (!connected)
 		{
 			foreach(FixedJoint joint in joints)
 			{
@@ -38,13 +39,7 @@ public class Staging : NetworkBehaviour
 				Destroy(joint);
 				foreach(MonoBehaviour script in GetComponentsInChildren<MonoBehaviour>())
 				{
-					//cleans off ship parts.
-					if(script is IStageable)
-					{
-						IStageable stage_script = (IStageable) script;
-						stage_script.Stage();
-					}
-					else
+					if (!(script is NetworkIdentity))
 					{
 						Destroy(script);
 					}

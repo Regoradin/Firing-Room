@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Engine : NetworkBehaviour, IStageable {
+public class Engine : NetworkBehaviour {
 
 	private Rigidbody rb;
 
@@ -30,7 +30,7 @@ public class Engine : NetworkBehaviour, IStageable {
 
 	private float pooled = 0;   //currently this value is used for both the radius and the force. Tweaking and experimentation will be required.
 	public float pooled_force_modifier;
-	private Vector3 engine_position; //currently is just the position, but can eventually be set to have torques and stuff
+	public Vector3 engine_offset; //currently is just the position, but can eventually be set to have torques and stuff
 
 	[HideInInspector]
 	[SyncVar(hook = "SetThrust")]
@@ -42,7 +42,6 @@ public class Engine : NetworkBehaviour, IStageable {
 	private void Awake()
 	{
 		rb = GetComponentInParent<Rigidbody>();
-		engine_position = transform.position;
 		LOX = new List<FuelSystem>();
 		LH2 = new List<FuelSystem>();
 		active_LOX = new List<FuelSystem>();
@@ -69,10 +68,31 @@ public class Engine : NetworkBehaviour, IStageable {
 		CheckFuelSystems();
 	}
 
-	public void Stage()
+	private bool is_quitting = false;
+	private void OnApplicationQuit()
 	{
-		Debug.Log("Making a new Engine");
-		Engine new_engine = Instantiate(this);
+		is_quitting = true;
+	}
+	private void OnDestroy()
+	{
+		StagedEngine staged_engine = gameObject.AddComponent<StagedEngine>();
+
+		staged_engine.rb = rb;
+		staged_engine.current_thrust = current_thrust;
+		staged_engine.engine_offset = engine_offset;
+		//This next bit may very well fail if a bit of fuel is destroyed before OnDestroy is called... but that shouldn't happen b/c things are actually destroyed last
+		float LOX = 0;
+		float LH2 = 0;
+		foreach(FuelSystem fuel in active_LOX)
+		{
+			LOX += fuel.Fuel;
+		}
+		LOX /= LOX_to_LH2_ratio;
+		foreach(FuelSystem fuel in active_LH2)
+		{
+			LH2 += fuel.Fuel;
+		}
+		staged_engine.fuel = LOX > LH2 ? LH2 : LOX;
 	}
 
 	public void CheckFuelSystems()
@@ -104,7 +124,7 @@ public class Engine : NetworkBehaviour, IStageable {
 		{
 			if(pooled > 0)
 			{
-				rb.AddExplosionForce(pooled, engine_position, pooled);
+				rb.AddExplosionForce(pooled, transform.position + engine_offset, pooled);
 				pooled = 0;
 			}
 
@@ -130,7 +150,8 @@ public class Engine : NetworkBehaviour, IStageable {
 				current_thrust = limited_thrust;
 			}
 
-			rb.AddForceAtPosition(Vector3.up * current_thrust, engine_position);
+			//Make sure that if this changes, you change the code on StagedEngine
+			rb.AddForceAtPosition(transform.InverseTransformVector(Vector3.up * current_thrust), transform.position + engine_offset);
 
 			//deplete fuel
 			foreach(FuelSystem fuel in active_LH2)
