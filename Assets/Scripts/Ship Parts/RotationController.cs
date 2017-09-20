@@ -52,6 +52,36 @@ public class RotationController : NetworkBehaviour {
 		}
 	}
 
+	private bool is_quitting = false;
+	private void OnApplicationQuit()
+	{
+		is_quitting = true;
+	}
+	private void OnDestroy()
+	{
+		StagedRotationController staged_rot = gameObject.AddComponent<StagedRotationController>();
+		staged_rot.ship_transform = ship_transform;
+		staged_rot.rotation_speed = rotation_speed;
+
+		float fuel = 0;
+		List<RCSFuel> fuels = new List<RCSFuel>();
+		foreach (RCS rcs in rcss)
+		{
+			if (rcs.fueled)
+			{
+				if (!fuels.Contains(rcs.fuel_tank))
+				{
+					fuels.Add(rcs.fuel_tank);
+				}
+			}
+		}
+		foreach(RCSFuel fuel_tank in fuels)
+		{
+			fuel += fuel_tank.Fuel;
+		}
+		staged_rot.fuel = fuel;
+	}
+
 	private void FixedUpdate()
 	{
 		if (!hit_target || maintain_target)
