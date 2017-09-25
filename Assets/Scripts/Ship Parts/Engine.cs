@@ -75,24 +75,27 @@ public class Engine : NetworkBehaviour {
 	}
 	private void OnDestroy()
 	{
-		StagedEngine staged_engine = gameObject.AddComponent<StagedEngine>();
+		if (!is_quitting)
+		{
+			StagedEngine staged_engine = gameObject.AddComponent<StagedEngine>();
 
-		staged_engine.rb = rb;
-		staged_engine.current_thrust = current_thrust;
-		staged_engine.engine_offset = engine_offset;
-		//This next bit may very well fail if a bit of fuel is destroyed before OnDestroy is called... but that shouldn't happen b/c things are actually destroyed last
-		float LOX = 0;
-		float LH2 = 0;
-		foreach(FuelSystem fuel in active_LOX)
-		{
-			LOX += fuel.Fuel;
+			staged_engine.rb = rb;
+			staged_engine.current_thrust = current_thrust;
+			staged_engine.engine_offset = engine_offset;
+			//This next bit may very well fail if a bit of fuel is destroyed before OnDestroy is called... but that shouldn't happen b/c things are actually destroyed last
+			float LOX = 0;
+			float LH2 = 0;
+			foreach (FuelSystem fuel in active_LOX)
+			{
+				LOX += fuel.Fuel;
+			}
+			LOX /= LOX_to_LH2_ratio;
+			foreach (FuelSystem fuel in active_LH2)
+			{
+				LH2 += fuel.Fuel;
+			}
+			staged_engine.fuel = LOX > LH2 ? LH2 : LOX;
 		}
-		LOX /= LOX_to_LH2_ratio;
-		foreach(FuelSystem fuel in active_LH2)
-		{
-			LH2 += fuel.Fuel;
-		}
-		staged_engine.fuel = LOX > LH2 ? LH2 : LOX;
 	}
 
 	public void CheckFuelSystems()
