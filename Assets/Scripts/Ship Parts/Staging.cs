@@ -31,7 +31,7 @@ public class Staging : NetworkBehaviour
 
 	public void Stage(bool b)
 	{
-		Debug.Log("stage");
+		Debug.Log("stage" + name);
 		connected = b;
 		if (!connected)
 		{

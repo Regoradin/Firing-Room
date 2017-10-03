@@ -12,7 +12,7 @@ public class StagedEngine : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
-		if (fuel >= 0)
+		if (fuel > 0)
 		{
 			rb.AddForceAtPosition(transform.InverseTransformVector(Vector3.up * current_thrust), transform.position + engine_offset);
 			fuel -= current_thrust;
@@ -20,6 +20,7 @@ public class StagedEngine : MonoBehaviour {
 		}
 		else
 		{
+			Debug.Log("Destroying engine");
 			Destroy(this);
 		}
 	}

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class LatLongAlt {
+public static class PlanetaryInfo {
 
-	static GameObject planet;
-	static float sea_level_radius;
+	private static GameObject planet;
+	private static float sea_level_radius;
 
-	static LatLongAlt()
+	static PlanetaryInfo()
 	{
 		GameObject[] possible_planets = GameObject.FindGameObjectsWithTag("Planet");
 		if (possible_planets.Length == 0)
@@ -27,7 +27,7 @@ public static class LatLongAlt {
 		sea_level_radius = planet.GetComponent<Collider>().bounds.extents.x;
 	}
 
-	public static Vector3 FindLatLongAlt(Transform transform)
+	public static Vector3 LatLongAlt(Transform transform)
 	{
 		float altitude = Vector3.Distance(transform.position, planet.transform.position);
 		altitude -= sea_level_radius;
@@ -52,6 +52,12 @@ public static class LatLongAlt {
 		}
 
 		return new Vector3(latitude, longitude, altitude);
+	}
+
+	public static float AirDensity(Transform transform)
+	{
+		//add actual calculations
+		return 1.229f;
 	}
 
 }
