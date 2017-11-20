@@ -4,8 +4,10 @@ using UnityEngine;
 
 public static class PlanetaryInfo {
 
-	private static GameObject planet;
+	public static GameObject planet;
+	public static GameObject default_planet;
 	private static float sea_level_radius;
+	
 
 	static PlanetaryInfo()
 	{
@@ -56,8 +58,12 @@ public static class PlanetaryInfo {
 
 	public static float AirDensity(Transform transform)
 	{
-		//add actual calculations
-		return 1.229f;
+		float max_radius = 2f;
+		float dropoff_rate = .6f;
+
+		float density = Mathf.Pow((1 - (1 / max_radius) * PlanetaryInfo.LatLongAlt(transform).z), dropoff_rate);
+
+		return density;
 	}
 
 }
