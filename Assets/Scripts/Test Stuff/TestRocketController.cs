@@ -20,7 +20,7 @@ public class TestRocketController : MonoBehaviour {
 
 	public void Turn(float rotation)
 	{
-		transform.Rotate(Vector3.back * rotation);
+		transform.Rotate(Vector3.right * rotation);
 	}
 
 	public void Thrust(float force)
