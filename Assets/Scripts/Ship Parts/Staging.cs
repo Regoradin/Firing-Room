@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class Staging : NetworkBehaviour
 {
 	public List<Rigidbody> connected_bodies;
-	public List<Staging> next_stages;   //every stage down the tree will be staged, but not actually brake the joints.
+	public List<Staging> next_stages;   //every stage down the tree will be staged, but not actually break the joints.
 
 	private List<FixedJoint> joints;
 	

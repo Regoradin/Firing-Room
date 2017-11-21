@@ -7,14 +7,32 @@ public class PlanetManager : MonoBehaviour {
 	public Planet planet;
 	public Planet default_planet;
 
+	private Rigidbody rb;
+
 	public void Start()
 	{
 		planet = default_planet;
+
+		//this might get interesting with staging and things...
+		rb = GetComponentInChildren<Rigidbody>();
 	}
 
 	public void Update()
 	{
-		Debug.Log(planet.name);
+		rb.AddForce(Gravity());
+	}
+
+	private Vector3 Gravity()
+	{
+		float grav_constant = 1000;
+
+		Vector3 direction = (planet.transform.position - transform.position).normalized;
+		float radius = Vector3.Distance(planet.transform.position, transform.position);
+
+
+		Vector3 directed_force = direction * (grav_constant * (planet.GetComponent<Rigidbody>().mass) * (rb.mass)) / (radius * radius);
+
+		return directed_force;
 	}
 
 	public Vector3 LatLongAlt()
@@ -46,10 +64,7 @@ public class PlanetManager : MonoBehaviour {
 
 	public float AirDensity(Transform transform)
 	{
-		float max_radius = 2f;
-		float dropoff_rate = .6f;
-
-		float density = Mathf.Pow((1 - (1 / max_radius) * this.LatLongAlt().z), dropoff_rate);
+		float density = Mathf.Pow((1 - (1 / planet.atmos_max_radius) * this.LatLongAlt().z), planet.atmos_dropoff_rate);
 
 		return density;
 	}
