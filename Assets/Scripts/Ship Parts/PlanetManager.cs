@@ -9,6 +9,7 @@ public class PlanetManager : MonoBehaviour {
 
 	private Rigidbody rb;
 
+
 	public void Start()
 	{
 		planet = default_planet;
@@ -22,7 +23,7 @@ public class PlanetManager : MonoBehaviour {
 		rb.AddForce(Gravity());
 	}
 
-	private Vector3 Gravity()
+	public Vector3 Gravity()
 	{
 		float grav_constant = 1000;
 
@@ -62,9 +63,13 @@ public class PlanetManager : MonoBehaviour {
 		return new Vector3(latitude, longitude, altitude);
 	}
 
-	public float AirDensity(Transform transform)
+	/// <summary>
+	/// Return the air density at the position of the planet manager in the current SoI, which should be the planet you are near. Returns NaN if you are outside the range of the atmosphere.
+	/// </summary>
+	/// <returns></returns>
+	public float AirDensity()
 	{
-		float density = Mathf.Pow((1 - (1 / planet.atmos_max_radius) * this.LatLongAlt().z), planet.atmos_dropoff_rate);
+		float density = Mathf.Pow((1 - (1 / planet.atmos_max_radius) * LatLongAlt().z), planet.atmos_dropoff_rate);
 
 		return density;
 	}
