@@ -1,15 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Parachute : MonoBehaviour {
+public class Parachute : NetworkBehaviour {
 
 	public float parachute_constant;
 
 	private Rigidbody rb;
 	private PlanetManager planet;
 
+	[SyncVar(hook = "Open")]
 	public bool open = false;
+	[SyncVar(hook = "Cut")]
+	public bool cut = false;
 
 	private void Start()
 	{
@@ -25,6 +29,20 @@ public class Parachute : MonoBehaviour {
 
 			rb.AddForce(lift_force * -rb.velocity.normalized);
 		}
+	}
+
+	private void Open(bool b)
+	{
+		if (!cut)
+		{
+			open = true;
+		}
+	}
+
+	private void Cut(bool b)
+	{
+		open = false;
+		cut = true;
 	}
 
 
