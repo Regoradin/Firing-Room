@@ -29,52 +29,31 @@ public class Staging : NetworkBehaviour
 
 	}
 
-	public void Stage(bool b)
+	public void Stage(bool b, bool breaking = true)
 	{
-		Debug.Log("stage" + name);
+		Debug.Log("stage: " + name);
 		connected = b;
 		if (!connected)
 		{
-			foreach(FixedJoint joint in joints)
+			if (breaking)
 			{
-				//breaking the joints
-				Destroy(joint);
-				foreach(MonoBehaviour script in GetComponentsInChildren<MonoBehaviour>())
+				foreach (FixedJoint joint in joints)
+				{
+					//breaking the joints
+					Destroy(joint);
+				}
+			}
+			foreach(MonoBehaviour script in GetComponentsInChildren<MonoBehaviour>())
 				{
 					if (!(script is NetworkIdentity))
 					{
 						Destroy(script);
 					}
 				}
-			}
-			
 			foreach(Staging staging in next_stages)
 			{
-				staging.FakeStage(false);
+				staging.Stage(true, false);
 			}
 		}
 	}
-
-	public void FakeStage(bool b)
-	{
-		//like a normal stage, but doesn't break the joints
-		connected = b;
-		if (!connected)
-		{
-			foreach (MonoBehaviour script in GetComponentsInChildren<MonoBehaviour>())
-			{
-				if (!(script is NetworkIdentity))
-				{
-					Destroy(script);
-				}
-			}
-			foreach (Staging staging in next_stages)
-			{
-				staging.FakeStage(false);
-			}
-		}
-	}
-		
-	
-
 }
