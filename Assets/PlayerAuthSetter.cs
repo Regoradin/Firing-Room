@@ -21,4 +21,5 @@ public class PlayerAuthSetter : NetworkBehaviour {
 		net_id.RemoveClientAuthority(net_id.clientAuthorityOwner);
 		net_id.AssignClientAuthority(connectionToClient);
 	}
+
 }

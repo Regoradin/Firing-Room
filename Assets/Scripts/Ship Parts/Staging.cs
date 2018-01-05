@@ -10,8 +10,17 @@ public class Staging : NetworkBehaviour
 
 	private List<FixedJoint> joints;
 	
-	[SyncVar(hook = "Stage")]
+	[SyncVar(hook = "HookStage")]
 	public bool connected = true;
+	//
+	/// <summary>
+	/// this only exists to deal with that pesky optional bool that apparently breaks the function signature.
+	/// </summary>
+	public void HookStage(bool b)
+	{
+		Stage(false);
+	}
+
 
 	void Awake()
 	{
@@ -56,4 +65,5 @@ public class Staging : NetworkBehaviour
 			}
 		}
 	}
+
 }
