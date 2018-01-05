@@ -6,12 +6,12 @@ using UnityEngine.Networking;
 public class SetVelocityRelativeToggle : Button {
 
 	public VelocityReporter velocity_reporter;
-	public GameObject rb_t_object, rb_f_object;	//starts with velocity reporting relative to rb_t_object, can be toggled to rb_f_object
+	public GameObject rb_t_object, rb_f_object;
 	private bool state = true;
 
 	private void Start()
 	{
-		CmdAddTask(new SetVelocityRelativeTask(velocity_reporter, rb_t_object.GetComponent<Rigidbody>()));
+		CmdAddTask(rb_t_object);
 	}
 
 	private void OnMouseDown()
@@ -19,6 +19,15 @@ public class SetVelocityRelativeToggle : Button {
 		state = !state;
 		GameObject new_rb_object = state ? rb_t_object : rb_f_object;
 
-		CmdAddTask(new SetVelocityRelativeTask(velocity_reporter, new_rb_object.GetComponent<Rigidbody>()));
+		CmdAddTask(new_rb_object);
 	}
+
+	[Command]
+	private void CmdAddTask(GameObject rb_object)
+	{
+		Rigidbody rb = rb_object.GetComponent<Rigidbody>();
+		GameObject.Find("Network").GetComponent<Network>().AddTask(new SetVelocityRelativeTask(velocity_reporter, rb));
+		//For some reason this won't find the network... this is a really bad fix but it should work.
+	}
+
 }

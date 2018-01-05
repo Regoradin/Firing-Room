@@ -11,7 +11,13 @@ public class IgniteButton : Button {
 	{
 		if (hasAuthority)
 		{
-			CmdAddTask(new IgniteButtonTask(engine));
+			CmdAddTask();
 		}
+	}
+
+	[Command]
+	private void CmdAddTask()
+	{
+		network.AddTask(new IgniteButtonTask(engine));
 	}
 }

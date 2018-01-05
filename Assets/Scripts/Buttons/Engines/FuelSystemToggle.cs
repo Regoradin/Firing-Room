@@ -11,7 +11,17 @@ public class FuelSystemToggle : Button {
 
 	private void OnMouseDown()
 	{
-		state = !state;
-		CmdAddTask(new FuelSystemToggleTask(fuel_system, state, is_valve));
+		if (hasAuthority)
+		{
+			CmdAddTask(!state);
+			state = !state;
+		}
 	}
+
+	[Command]
+	private void CmdAddTask(bool state)
+	{
+		network.AddTask(new FuelSystemToggleTask(fuel_system, state, is_valve));
+	}
+
 }

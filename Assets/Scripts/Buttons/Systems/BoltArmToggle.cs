@@ -10,7 +10,7 @@ public class BoltArmToggle : Button {
 	private void OnMouseDown()
 	{
 		state = !state;
-		CmdAddTask(new BoltArmTask(bolt, state));
+		network.AddTask(new BoltArmTask(bolt, state));
 	}
 
 }
