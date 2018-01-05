@@ -10,7 +10,7 @@ public class ToggleRCSButton : Button {
 	public void OnMouseDown()
 	{
 		state = !state;
-		network.AddTask(new ToggleRCSTask(rcs, state));
+		CmdAddTask(new ToggleRCSTask(rcs, state));
 	}
 
 }

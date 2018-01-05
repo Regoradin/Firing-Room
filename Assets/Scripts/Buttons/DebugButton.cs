@@ -10,12 +10,6 @@ public class DebugButton : Button {
 
 	public void OnMouseDown()
 	{
-		CmdAddTask();
-	}
-
-	[Command]
-	private void CmdAddTask()
-	{
-		network.AddTask(new DebugTask("debug", message, 2, lamp));
+		CmdAddTask(new DebugTask("debug", message, 2, lamp));
 	}
 }

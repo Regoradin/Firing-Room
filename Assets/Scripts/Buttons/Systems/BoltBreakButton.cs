@@ -8,7 +8,7 @@ public class BoltBreakButton : Button {
 
 	private void OnMouseDown()
 	{
-		network.AddTask(new BoltBreakTask(bolt));
+		CmdAddTask(new BoltBreakTask(bolt));
 	}
 
 }

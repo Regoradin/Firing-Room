@@ -12,14 +12,7 @@ public class ChangeAntennaTargetButton : Button {
 	{
 		if (hasAuthority)
 		{
-			CmdAddTask();
+			CmdAddTask(new ChangeAntennaTargetTask(antenna, latitude, longitude, altitude));
 		}
 	}
-
-	[Command]
-	private void CmdAddTask()
-	{
-		network.AddTask(new ChangeAntennaTargetTask(antenna, latitude, longitude, altitude));
-	}
-
 }

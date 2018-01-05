@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Task {
+public struct Task {
 
 	public string category;
 	public float size;
@@ -18,5 +18,8 @@ public abstract class Task {
 	}
 
 	
-	public abstract void Activate();
+	public virtual void Activate()
+	{
+		Debug.Log("A generic task somehow existed");
+	}
 }

@@ -8,7 +8,7 @@ public class StageButton : Button {
 
 	private void OnMouseDown()
 	{
-		network.AddTask(new StageTask(staging));
+		CmdAddTask(new StageTask(staging));
 	}
 
 }

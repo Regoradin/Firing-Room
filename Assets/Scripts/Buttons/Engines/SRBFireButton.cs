@@ -11,14 +11,7 @@ public class SRBFireButton : Button {
 	{
 		if (hasAuthority)
 		{
-			CmdAddTask();
+			CmdAddTask(new SRBFireButtonTask(srb));
 		}
 	}
-
-	[Command]
-	private void CmdAddTask()
-	{
-		network.AddTask(new SRBFireButtonTask(srb));
-	}
-
 }

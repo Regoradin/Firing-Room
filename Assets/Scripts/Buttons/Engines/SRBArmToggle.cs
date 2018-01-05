@@ -13,14 +13,7 @@ public class SRBArmToggle : Button {
 		if (hasAuthority)
 		{
 			state = !state;
-			CmdAddTask(state);
+			CmdAddTask(new SRBArmToggleTask(srb, state));
 		}
 	}
-
-	[Command]
-	private void CmdAddTask(bool state)
-	{
-		network.AddTask(new SRBArmToggleTask(srb, state));
-	}
-
 }
