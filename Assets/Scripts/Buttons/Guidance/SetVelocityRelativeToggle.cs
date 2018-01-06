@@ -11,23 +11,21 @@ public class SetVelocityRelativeToggle : Button {
 
 	private void Start()
 	{
-		CmdAddTask(rb_t_object);
+		CmdAddTask();
 	}
 
 	private void OnMouseDown()
 	{
 		state = !state;
-		GameObject new_rb_object = state ? rb_t_object : rb_f_object;
-
-		CmdAddTask(new_rb_object);
+		CmdAddTask();
 	}
 
 	[Command]
-	private void CmdAddTask(GameObject rb_object)
+	protected override void CmdAddTask()
 	{
-		Rigidbody rb = rb_object.GetComponent<Rigidbody>();
-		GameObject.Find("Network").GetComponent<Network>().AddTask(new SetVelocityRelativeTask(velocity_reporter, rb));
-		//For some reason this won't find the network... this is a really bad fix but it should work.
+		Rigidbody new_rb = (state ? rb_t_object : rb_f_object).GetComponent<Rigidbody>();
+
+		network.AddTask(new SetVelocityRelativeTask(velocity_reporter, new_rb));
 	}
 
 }

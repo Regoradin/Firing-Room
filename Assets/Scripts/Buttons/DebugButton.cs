@@ -14,7 +14,7 @@ public class DebugButton : Button {
 	}
 
 	[Command]
-	private void CmdAddTask()
+	protected override void CmdAddTask()
 	{
 		network.AddTask(new DebugTask("debug", message, 2, lamp));
 	}

@@ -9,14 +9,11 @@ public class IgniteButton : Button {
 
 	private void OnMouseDown()
 	{
-		if (hasAuthority)
-		{
-			CmdAddTask();
-		}
+		CmdAddTask();
 	}
 
 	[Command]
-	private void CmdAddTask()
+	protected override void CmdAddTask()
 	{
 		network.AddTask(new IgniteButtonTask(engine));
 	}

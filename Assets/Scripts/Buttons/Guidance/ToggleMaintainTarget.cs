@@ -12,11 +12,11 @@ public class ToggleMaintainTarget : Button {
 	{
 		//code for doing graphics here also
 		state = !state;
-		CmdAddTask(state);
+		CmdAddTask();
 	}
 
 	[Command]
-	private void CmdAddTask(bool state)
+	protected override void CmdAddTask()
 	{
 		network.AddTask(new ToggleMaintainTargetTask(rot_controller, state));
 	}

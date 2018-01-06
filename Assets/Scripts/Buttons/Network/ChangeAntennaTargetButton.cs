@@ -17,7 +17,7 @@ public class ChangeAntennaTargetButton : Button {
 	}
 
 	[Command]
-	private void CmdAddTask()
+	protected override void CmdAddTask()
 	{
 		network.AddTask(new ChangeAntennaTargetTask(antenna, latitude, longitude, altitude));
 	}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Button : NetworkBehaviour {
+public abstract class Button : NetworkBehaviour {
 
 	protected Network network;
 
@@ -11,5 +11,8 @@ public class Button : NetworkBehaviour {
 	{
 		network = GameObject.Find("Network").GetComponent<Network>();
 	}
+
+	[Command]
+	protected abstract void CmdAddTask();
 
 }

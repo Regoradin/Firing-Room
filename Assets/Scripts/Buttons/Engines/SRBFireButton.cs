@@ -16,7 +16,7 @@ public class SRBFireButton : Button {
 	}
 
 	[Command]
-	private void CmdAddTask()
+	protected override void CmdAddTask()
 	{
 		network.AddTask(new SRBFireButtonTask(srb));
 	}

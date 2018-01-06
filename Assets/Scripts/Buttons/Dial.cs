@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,5 +47,10 @@ public class Dial : Button {
 		{
 			value = min_value;
 		}
+	}
+
+	protected override void CmdAddTask()
+	{
+		//this shouldn't ever be called, but some functionless dials are necessary to plug into other multi-dial controls.
 	}
 }

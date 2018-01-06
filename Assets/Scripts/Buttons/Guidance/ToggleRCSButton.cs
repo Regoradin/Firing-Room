@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,12 @@ public class ToggleRCSButton : Button {
 	public void OnMouseDown()
 	{
 		state = !state;
-		network.AddTask(new ToggleRCSTask(rcs, state));
+		CmdAddTask();
 	}
+
+	protected override void CmdAddTask()
+	{
+		network.AddTask(new ToggleRCSTask(rcs, state));
+		}
 
 }

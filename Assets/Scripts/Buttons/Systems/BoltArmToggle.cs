@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,11 @@ public class BoltArmToggle : Button {
 	private void OnMouseDown()
 	{
 		state = !state;
+		CmdAddTask();
+	}
+
+	protected override void CmdAddTask()
+	{
 		network.AddTask(new BoltArmTask(bolt, state));
 	}
 

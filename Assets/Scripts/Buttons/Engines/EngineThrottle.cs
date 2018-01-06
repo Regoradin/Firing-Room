@@ -12,13 +12,13 @@ public class EngineThrottle : Throttle {
 		if (hasAuthority)
 		{
 			base.OnMouseDrag();
-			CmdAddTask(level);
+			CmdAddTask();
 		}
 	}
 
 
 	[Command]
-	private void CmdAddTask(float level)
+	protected override void CmdAddTask()
 	{
 		_net.AddTask(new EngineThrottleTask(engine, level));
 	}

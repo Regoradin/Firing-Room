@@ -8,15 +8,16 @@ public class SetTargetRotationButton : Button {
 	public RotationController rotation_controller;
 
 	public Dial x_dial, y_dial, z_dial;
+	private Vector3 target_rotation;
 
 	private void OnMouseDown()
 	{
-		CmdAddTask(new Vector3(x_dial.Value, y_dial.Value, z_dial.Value));
-		Debug.Log(new Vector3(x_dial.Value, y_dial.Value, z_dial.Value));
+		target_rotation = new Vector3(x_dial.Value, y_dial.Value, z_dial.Value);
+		CmdAddTask();
 	}
 
 	[Command]
-	private void CmdAddTask(Vector3 target_rotation)
+	protected override void CmdAddTask()
 	{
 		network.AddTask(new SetTargetRotationTask(rotation_controller, target_rotation));
 	}

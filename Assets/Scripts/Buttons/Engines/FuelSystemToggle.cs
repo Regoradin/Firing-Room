@@ -13,14 +13,14 @@ public class FuelSystemToggle : Button {
 	{
 		if (hasAuthority)
 		{
-			CmdAddTask(!state);
 			state = !state;
+			CmdAddTask();
 		}
 	}
 
-	[Command]
-	private void CmdAddTask(bool state)
+	protected override void CmdAddTask()
 	{
+		Debug.Log("Toggling fuel system here");
 		network.AddTask(new FuelSystemToggleTask(fuel_system, state, is_valve));
 	}
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Throttle : Button {
+public abstract class Throttle : Button {
 
 	public float max_movement;
 	private float min_movement;
