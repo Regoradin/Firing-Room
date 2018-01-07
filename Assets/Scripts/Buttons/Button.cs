@@ -7,12 +7,14 @@ public abstract class Button : NetworkBehaviour {
 
 	protected Network network;
 
+	public string category;
+	public float size = 1;
+	public bool send_to_consoles = false;
+	public int channels = 1;
+
 	private void Start()
 	{
 		network = GameObject.Find("Network").GetComponent<Network>();
 	}
-
-	[Command]
-	protected abstract void CmdAddTask();
 
 }

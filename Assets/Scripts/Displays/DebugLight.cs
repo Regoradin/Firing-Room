@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class DebugLight : NetworkBehaviour {
+public class DebugLight : NetworkBehaviour, ITriggerTaskable {
 
 	private Material mat;
 	[SyncVar(hook = "SetGlow")]
@@ -18,6 +18,11 @@ public class DebugLight : NetworkBehaviour {
 		Debug.Log("Setting color, hook hoooked");
 		mat.SetColor("_EmissionColor", color);
 		glow_color = color;
+	}
+
+	public void DoTask()
+	{
+		glow_color = new Color(1, 0, 0);
 	}
 	
 }
