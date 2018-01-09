@@ -9,12 +9,12 @@ public class TriggerTask : Task {
 
 	public TriggerTask(ITriggerTaskable target, string category, float size, bool send_to_consoles = false, int channels = 1):base(category, size, send_to_consoles, channels)
 	{
-		this.target = target;	
+		this.target = target;
 	}
 
 	public override void Activate()
 	{
-		target.DoTask();
+		target.TriggerTask();
 	}
 
 }

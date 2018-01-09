@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dial : Button {
+public class Dial : MonoBehaviour {
 
 	public float scroll_increment;
 

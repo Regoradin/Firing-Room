@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ITriggerTaskable {
+public interface IFloatTaskable {
 
-	void TriggerTask();
+	void FloatTask(float input);
 
 }

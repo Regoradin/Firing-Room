@@ -20,7 +20,7 @@ public class DebugLight : NetworkBehaviour, ITriggerTaskable {
 		glow_color = color;
 	}
 
-	public void DoTask()
+	public void TriggerTask()
 	{
 		glow_color = new Color(1, 0, 0);
 	}

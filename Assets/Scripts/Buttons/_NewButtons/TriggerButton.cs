@@ -17,10 +17,6 @@ public class TriggerButton : Button {
 		{
 			Debug.Log(name + " was given an unusable target");
 		}
-		else
-		{
-			Debug.Log(target);
-		}
 	}
 
 	private void OnMouseDown()
