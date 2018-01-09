@@ -6,13 +6,13 @@ using UnityEngine.Networking;
 public class TriggerButton : Button {
 
 	public MonoBehaviour target_behaviour;
-	private ITriggerTaskable target;
+	public ITriggerTaskable target;
 
-	private void Start()
+	new private void Start()
 	{
-		Debug.Log("Start got called");
+		base.Start();
+
 		target = target_behaviour as ITriggerTaskable;
-		Debug.Log(target);
 		if (target == null)
 		{
 			Debug.Log(name + " was given an unusable target");
@@ -31,7 +31,8 @@ public class TriggerButton : Button {
 	[Command]
 	private void CmdAddTriggerTask()
 	{
-		Debug.Log("adding trigger task");
+		Debug.Log("adding trigger task with target: ");
+		Debug.Log(network);
 		network.AddTask(new TriggerTask(target, category, size, send_to_consoles, channels));
 	}
 

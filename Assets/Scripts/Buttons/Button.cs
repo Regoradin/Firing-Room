@@ -12,7 +12,7 @@ public abstract class Button : NetworkBehaviour {
 	public bool send_to_consoles = false;
 	public int channels = 1;
 
-	private void Start()
+	protected void Start()
 	{
 		network = GameObject.Find("Network").GetComponent<Network>();
 	}
