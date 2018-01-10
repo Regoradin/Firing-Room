@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class RotationController : NetworkBehaviour {
+public class RotationController : NetworkBehaviour, IVector3Taskable {
 
 	private RotationCalculator rot_calc;
 
 	public Transform ship_transform;
 
 	public Vector3 rotation_speed;
-	[SyncVar][HideInInspector]
-	public Vector3 target_rotation;
+	[SyncVar]
+	private Vector3 target_rotation;
 	public Vector3 Target_rotation
 	{
 		get
@@ -23,6 +23,11 @@ public class RotationController : NetworkBehaviour {
 			target_rotation = value;
 			hit_target = false;
 		}
+	}
+
+	public void Vector3Task(Vector3 new_rotation)
+	{
+		Target_rotation = new_rotation;
 	}
 
 	//if maintain_target is set to true, the rotation of the ship will be kept constant through velocity changes. If it is set to false, then the ship won't rotate once it has hit it's target rotation.

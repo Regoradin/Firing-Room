@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class RCS : NetworkBehaviour {
+public class RCS : NetworkBehaviour, ITriggerTaskable {
 
 	public Vector3 rotation_speed;
 	public RCSFuel fuel_tank;
@@ -15,6 +15,10 @@ public class RCS : NetworkBehaviour {
 
 	[SyncVar(hook = "SetState")]
 	public bool active;
+	public void TriggerTask()
+	{
+		active = !active;
+	}
 
 	private void Start()
 	{
