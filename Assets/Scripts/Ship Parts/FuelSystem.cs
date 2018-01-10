@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class FuelSystem : NetworkBehaviour {
+public class FuelSystem : NetworkBehaviour, IBoolTaskable {
 
 	public bool is_LOX; //The alternative is LH2
 
@@ -11,6 +11,22 @@ public class FuelSystem : NetworkBehaviour {
 	public bool valve_open = false;
 	[SyncVar(hook = "TogglePump")]
 	public bool pump_on = false;
+
+	/// <summary>
+	/// This will toggle whether the pummp and the valve are open. The button calling this needs to set the bool appropriately to select which one.
+	/// </summary>
+	/// <param name="b">True for pump, false for valve.</param>
+	public void BoolTask(bool b)
+	{
+		if (b)
+		{
+			pump_on = !pump_on;
+		}
+		else
+		{
+			valve_open = !valve_open;
+		}
+	}
 
 	public float max_fuel;
 	private float fuel;

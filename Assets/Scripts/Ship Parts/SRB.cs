@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class SRB : NetworkBehaviour {
+public class SRB : NetworkBehaviour, IBoolTaskable {
 
 	private Rigidbody rb;
 	private Vector3 thrust_position;
@@ -13,9 +13,21 @@ public class SRB : NetworkBehaviour {
 	private float end_time;
 
 	[SyncVar]
-	public bool armed = false;
+	private bool armed = false;
 	[SyncVar(hook ="Fire")]
-	public bool firing = false;
+	private bool firing = false;
+
+	public void BoolTask(bool b)
+	{
+		if (b)
+		{
+			firing = true;
+		}
+		else
+		{
+			armed = !armed;
+		}
+	}
 
 	private bool spent;
 

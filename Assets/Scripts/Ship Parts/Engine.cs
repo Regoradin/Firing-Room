@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Engine : NetworkBehaviour {
+public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	private Rigidbody rb;
 
@@ -34,10 +34,20 @@ public class Engine : NetworkBehaviour {
 
 	[HideInInspector]
 	[SyncVar(hook = "SetThrust")]
-	public float level;
+	private float level;
+
+	public void FloatTask(float level)
+	{
+		this.level = level;
+	}
 
 	[SyncVar]
-	public bool ignited = false;
+	private bool ignited = false;
+
+	public void TriggerTask()
+	{
+		this.ignited = true;
+	}
 
 	private void Awake()
 	{
