@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Antenna : NetworkBehaviour {
+public class Antenna : NetworkBehaviour, IVector3Taskable {
 
-	
-	//[HideInInspector]
 	[SyncVar(hook="SetTarget")]
 	public Vector3 target;
+	public void Vector3Task(Vector3 vector)
+	{
+		target = vector;
+	}
 	
 	public float latitude, longitude, altitude;
 	public float range_latitude, range_longitude;

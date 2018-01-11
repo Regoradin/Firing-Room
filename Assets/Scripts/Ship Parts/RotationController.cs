@@ -3,36 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class RotationController : NetworkBehaviour, IVector3Taskable {
+public class RotationController : NetworkBehaviour, IVector3Taskable, ITriggerTaskable {
 
 	private RotationCalculator rot_calc;
 
 	public Transform ship_transform;
 
 	public Vector3 rotation_speed;
-	[SyncVar]
+	[SyncVar(hook = "SetTargetRotation")]
 	private Vector3 target_rotation;
-	public Vector3 Target_rotation
-	{
-		get
-		{
-			return target_rotation;
-		}
-		set
-		{
-			target_rotation = value;
-			hit_target = false;
-		}
-	}
 
 	public void Vector3Task(Vector3 new_rotation)
 	{
-		Target_rotation = new_rotation;
+		target_rotation = new_rotation;
+	}
+	private void SetTargetRotation(Vector3 new_rotation)
+	{
+		target_rotation = new_rotation;
+		hit_target = false;
 	}
 
 	//if maintain_target is set to true, the rotation of the ship will be kept constant through velocity changes. If it is set to false, then the ship won't rotate once it has hit it's target rotation.
 	[SyncVar][HideInInspector]
 	public bool maintain_target = false;
+	public void TriggerTask()
+	{
+		maintain_target = !maintain_target;
+	}
+
 	private bool hit_target = true;
 
 	private List<RCS> rcss;
