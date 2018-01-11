@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Bolt : NetworkBehaviour {
+public class Bolt : NetworkBehaviour, IBoolTaskable {
 
 	[SyncVar]
-	public bool armed = false;
+	private bool armed = false;
 	[SyncVar(hook = "Break")]
 	public bool broken = false;
+
+	public void BoolTask(bool b)
+	{
+		if (b)
+		{
+			broken = true;
+		}
+		else
+		{
+			armed = !armed;
+		}
+	}
 
 	private void Break(bool b)
 	{

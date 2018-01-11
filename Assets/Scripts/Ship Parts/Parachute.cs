@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Parachute : NetworkBehaviour {
+public class Parachute : NetworkBehaviour, IBoolTaskable {
 
 	public float parachute_constant;
 
@@ -14,6 +14,17 @@ public class Parachute : NetworkBehaviour {
 	public bool open = false;
 	[SyncVar(hook = "Cut")]
 	public bool cut = false;
+	public void BoolTask(bool b)
+	{
+		if (b)
+		{
+			cut = true;
+		}
+		else
+		{
+			open = true;
+		}
+	}
 
 	private void Start()
 	{

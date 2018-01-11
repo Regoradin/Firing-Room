@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Staging : NetworkBehaviour
+public class Staging : NetworkBehaviour, ITriggerTaskable
 {
 	public List<Rigidbody> connected_bodies;
 	public List<Staging> next_stages;   //every stage down the tree will be staged, but not actually break the joints.
@@ -11,8 +11,12 @@ public class Staging : NetworkBehaviour
 	private List<FixedJoint> joints;
 	
 	[SyncVar(hook = "HookStage")]
-	public bool connected = true;
-	//
+	private bool connected = true;
+	public void TriggerTask()
+	{
+		connected = false;
+	}
+
 	/// <summary>
 	/// this only exists to deal with that pesky optional bool that apparently breaks the function signature.
 	/// </summary>
