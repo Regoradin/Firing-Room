@@ -27,8 +27,6 @@ public class TriggerButton : Button {
 	[Command]
 	private void CmdAddTriggerTask()
 	{
-		Debug.Log("adding trigger task with target: ");
-		Debug.Log(network);
 		network.AddTask(new TriggerTask(target, category, size, send_to_consoles, channels));
 	}
 

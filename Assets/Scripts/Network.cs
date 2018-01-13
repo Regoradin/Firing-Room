@@ -52,7 +52,6 @@ public class Network : NetworkBehaviour {
 
 	public void AddTask(Task task)
 	{
-		Debug.Log("ADDING TASK: " + task.GetType());
 		if (task.send_to_consoles)
 		{
 			task.Activate();
