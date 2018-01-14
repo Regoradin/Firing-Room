@@ -14,6 +14,7 @@ public abstract class Button : NetworkBehaviour {
 
 	private Renderer rend;
 	private Material mat;
+	new private Light light;
 
 	[ColorUsage(true, true, 0f, 8,.125f, 3f)]
 	public Color unlit_color;
@@ -28,6 +29,8 @@ public abstract class Button : NetworkBehaviour {
 		rend = GetComponent<Renderer>();
 		mat = rend.material;
 		mat.SetColor("_EmissionColor", unlit_color);
+		light = GetComponentInChildren<Light>();
+		light.color = unlit_color;
 	}
 
 	protected void OnMouseDown()
@@ -36,11 +39,13 @@ public abstract class Button : NetworkBehaviour {
 		{
 			lit = false;
 			mat.SetColor("_EmissionColor", unlit_color);
+			light.color = unlit_color;
 		}
 		else
 		{
 			lit = true;
 			mat.SetColor("_EmissionColor", lit_color);
+			light.color = lit_color;
 		}
 	}
 
