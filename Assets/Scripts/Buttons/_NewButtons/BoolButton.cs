@@ -21,8 +21,9 @@ public class BoolButton : Button {
 		}
 	}
 
-	private void OnMouseDown()
+	new private void OnMouseDown()
 	{
+		base.OnMouseDown();
 		CmdAddBoolTask(b);
 	}
 

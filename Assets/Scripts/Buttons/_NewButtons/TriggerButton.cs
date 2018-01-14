@@ -19,8 +19,9 @@ public class TriggerButton : Button {
 		}
 	}
 
-	private void OnMouseDown()
+	new private void OnMouseDown()
 	{
+		base.OnMouseDown();
 		CmdAddTriggerTask();
 	}
 

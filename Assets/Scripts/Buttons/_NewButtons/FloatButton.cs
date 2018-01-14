@@ -21,8 +21,9 @@ public class FloatButton : Button {
 		}
 	}
 
-	private void OnMouseDown()
+	new private void OnMouseDown()
 	{
+		base.OnMouseDown();
 		CmdAddFloatTask(value);
 	}
 
