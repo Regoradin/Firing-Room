@@ -36,7 +36,6 @@ public class DatalineDisplay : MonoBehaviour {
 
 	private void TaskUpload(Task task)
 	{
-
 		//Math to make the next three things work
 		float adjustment = (-Vector3.Distance(start.position, end.position) * task.size) / (2 * (task.size - dataline.Network.delay));
 		float speed = (-Vector3.Distance(start.position, end.position)) / (task.size - dataline.Network.delay);
@@ -71,7 +70,37 @@ public class DatalineDisplay : MonoBehaviour {
 	
 	private void DataDownload(Data data)
 	{
+		Debug.Log(data.category);
 
+		//Math to make the next three things work
+		float adjustment = (-Vector3.Distance(start.position, end.position) * data.size) / (2 * (data.size - dataline.Network.delay));
+		float speed = (-Vector3.Distance(start.position, end.position)) / (data.size - dataline.Network.delay);
+
+		Vector3 direction = (start.position - end.position).normalized;
+
+		//Makes a new block behind the starting position with the same rotation as the parent object
+		Vector3 starting_position = end.position + (direction * adjustment);
+		GameObject new_block = Instantiate(block, starting_position, transform.rotation);
+
+		//Makes the block go
+		Vector3 velocity = direction.normalized * speed;
+		new_block.GetComponent<Rigidbody>().velocity = velocity;
+
+		//Makes the block appropriately skinny
+		new_block.transform.localScale = new Vector3(new_block.transform.localScale.x, new_block.transform.localScale.y, adjustment * 2);
+
+		//Makes the block appropriately pretty
+		Material mat = new_block.GetComponent<Renderer>().material;
+		if (cat_colors.ContainsKey(data.category))
+		{
+			mat.SetColor("_Color", cat_colors[data.category]);
+		}
+		else
+		{
+			mat.SetColor("_Color", default_color);
+		}
+
+
+		Destroy(new_block, dataline.Network.delay);
 	}
-
 }
