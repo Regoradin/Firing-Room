@@ -21,9 +21,9 @@ public class Vector3Button : Button {
 		}
 	}
 
-	new private void OnMouseDown()
+	new private void ClickEvent()
 	{
-		base.OnMouseDown();
+		base.ClickEvent();
 		CmdAddVector3Task(vector);
 	}
 

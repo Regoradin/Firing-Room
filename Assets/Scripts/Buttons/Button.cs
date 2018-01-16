@@ -46,7 +46,7 @@ public abstract class Button : NetworkBehaviour {
 		anim.SetTrigger("ButtonPressed");
 	}
 
-	private void ClickEvent()
+	protected void ClickEvent()
 	{
 		if (light_toggle)
 		{

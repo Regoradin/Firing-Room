@@ -7,6 +7,10 @@ public class Dataline : MonoBehaviour
 
 	public bool active = true;
 	private Network network;
+	public Network Network
+	{
+		get { return network; }
+	}
 	public bool is_uplink = true;
 	public List<string> categories_enabled;
 
@@ -17,6 +21,11 @@ public class Dataline : MonoBehaviour
 	private List<Data> data_buffer;
 	private bool downloading = false;
 	private List<Data> data_on_line;
+
+	public delegate void TaskHandler(Task task);
+	public event TaskHandler TaskUploaded;
+	public delegate void DataHandler(Data data);
+	public event DataHandler DataDownloaded;
 
 	private void Awake()
 	{
@@ -85,7 +94,7 @@ public class Dataline : MonoBehaviour
 
 	//TASK UPLOADING
 	/// <summary>
-	/// Adds the task to the dataline's buffer
+	/// Adds the task to the dataline's buffer. Called by the network.
 	/// </summary>
 	/// <param name="task"></param>
 	public void AddTask(Task task)
@@ -115,6 +124,11 @@ public class Dataline : MonoBehaviour
 				tasks_on_line.Add(task_to_upload);
 				task_buffer.Remove(task_to_upload);
 
+				//Raises event to any dataline displays that might be listening
+				if (TaskUploaded != null)
+				{
+					TaskUploaded(task_to_upload);
+				}
 
 				Invoke("FinishUpload", task_to_upload.size);
 				StartCoroutine(ActivateTask(task_to_upload));
@@ -125,7 +139,6 @@ public class Dataline : MonoBehaviour
 	private void FinishUpload()
 	{
 		uploading = false;
-		//this is probably where we will figure out how to do the graphics and stuff
 	}
 
 	private IEnumerator ActivateTask(Task task)
@@ -167,6 +180,10 @@ public class Dataline : MonoBehaviour
 				data_on_line.Add(data_to_download);
 				data_buffer.Remove(data_to_download);
 
+				if(DataDownloaded != null)
+				{
+					DataDownloaded(data_to_download);
+				}
 
 				Invoke("FinishDownload", data_to_download.size);
 				StartCoroutine(ActivateData(data_to_download));

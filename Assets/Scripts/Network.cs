@@ -5,7 +5,8 @@ using UnityEngine.Networking;
 
 public class Network : NetworkBehaviour {
 
-	public float delay = 2; //if delay is -1, then there is no connection, but datas and tasks will still be added onto buffers.
+	[HideInInspector]
+	public float delay; //if delay is -1, then there is no connection, but datas and tasks will still be added onto buffers.
 
 	private List<Dataline> datalines;
 
@@ -66,6 +67,7 @@ public class Network : NetworkBehaviour {
 					available_datalines.Add(dataline);
 				}
 			}
+			//If no datalines are available, ignore the category restriction
 			if (available_datalines.Count == 0)
 			{
 				foreach (Dataline dataline in datalines)
