@@ -24,7 +24,10 @@ public class BoolButton : Button {
 	new private void ClickEvent()
 	{
 		base.ClickEvent();
-		CmdAddBoolTask(b);
+		if (isServer)
+		{
+			CmdAddBoolTask(b);
+		}
 	}
 
 	[Command]

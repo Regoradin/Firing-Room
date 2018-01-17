@@ -24,7 +24,10 @@ public class FloatButton : Button {
 	new private void ClickEvent()
 	{
 		base.ClickEvent();
-		CmdAddFloatTask(value);
+		if (isServer)
+		{
+			CmdAddFloatTask(value);
+		}
 	}
 
 	[Command]

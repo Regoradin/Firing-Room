@@ -38,13 +38,16 @@ public class DatalineDisplay : NetworkBehaviour{
 	private void UnpackTask(Task task)
 	{
 		Debug.Log("Unpacking");
-		RpcTaskUpload(task.size, task.category);
+		if (isServer)
+		{
+			RpcTaskUpload(task.size, task.category);
+		}
 	}
 
 	[ClientRpc]
 	private void RpcTaskUpload(float size, string category)
 	{
-		Debug.Log("Displaying");
+		Debug.Log("Displaying" + gameObject.name);
 		//Math to make the next three things work
 		float adjustment = (-Vector3.Distance(start.position, end.position) * size) / (2 * (size - dataline.Network.delay));
 		float speed = (-Vector3.Distance(start.position, end.position)) / (size - dataline.Network.delay);

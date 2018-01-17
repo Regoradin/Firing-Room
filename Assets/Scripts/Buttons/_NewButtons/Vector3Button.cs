@@ -24,7 +24,10 @@ public class Vector3Button : Button {
 	new private void ClickEvent()
 	{
 		base.ClickEvent();
-		CmdAddVector3Task(vector);
+		if (isServer)
+		{
+			CmdAddVector3Task(vector);
+		}
 	}
 
 	[Command]

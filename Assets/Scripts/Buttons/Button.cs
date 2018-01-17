@@ -45,10 +45,12 @@ public abstract class Button : NetworkBehaviour {
 	{
 		//Because NetworkAnimators are weird with triggers.
 		GetComponent<NetworkAnimator>().SetTrigger("ButtonPressed");
+		Debug.Log("Clicking mouse");
 	}
 
 	protected void ClickEvent()
 	{
+		Debug.Log("Click Event");
 		if (light_toggle)
 		{
 			if (lit)

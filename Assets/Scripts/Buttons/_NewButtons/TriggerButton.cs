@@ -22,7 +22,10 @@ public class TriggerButton : Button {
 	new private void ClickEvent()
 	{
 		base.ClickEvent();
-		CmdAddTriggerTask();
+		if (isServer)
+		{
+			CmdAddTriggerTask();
+		}
 	}
 
 	[Command]
