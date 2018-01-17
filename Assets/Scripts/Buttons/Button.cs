@@ -43,7 +43,8 @@ public abstract class Button : NetworkBehaviour {
 
 	protected void OnMouseDown()
 	{
-		anim.SetTrigger("ButtonPressed");
+		//Because NetworkAnimators are weird with triggers.
+		GetComponent<NetworkAnimator>().SetTrigger("ButtonPressed");
 	}
 
 	protected void ClickEvent()

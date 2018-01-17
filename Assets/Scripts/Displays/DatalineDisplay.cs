@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class DatalineDisplay : MonoBehaviour {
+public class DatalineDisplay : NetworkBehaviour{
 
 	public Dataline dataline;
 
@@ -30,15 +31,23 @@ public class DatalineDisplay : MonoBehaviour {
 			}
 		}
 
-		dataline.TaskUploaded += TaskUpload;
-		dataline.DataDownloaded += DataDownload;
+		dataline.EventTaskUploaded += UnpackTask;
+		dataline.EventDataDownloaded += UnpackData;
 	}
 
-	private void TaskUpload(Task task)
+	private void UnpackTask(Task task)
 	{
+		Debug.Log("Unpacking");
+		RpcTaskUpload(task.size, task.category);
+	}
+
+	[ClientRpc]
+	private void RpcTaskUpload(float size, string category)
+	{
+		Debug.Log("Displaying");
 		//Math to make the next three things work
-		float adjustment = (-Vector3.Distance(start.position, end.position) * task.size) / (2 * (task.size - dataline.Network.delay));
-		float speed = (-Vector3.Distance(start.position, end.position)) / (task.size - dataline.Network.delay);
+		float adjustment = (-Vector3.Distance(start.position, end.position) * size) / (2 * (size - dataline.Network.delay));
+		float speed = (-Vector3.Distance(start.position, end.position)) / (size - dataline.Network.delay);
 
 		Vector3 direction = (end.position - start.position).normalized;
 
@@ -55,9 +64,9 @@ public class DatalineDisplay : MonoBehaviour {
 
 		//Makes the block appropriately pretty
 		Material mat = new_block.GetComponent<Renderer>().material;
-		if (cat_colors.ContainsKey(task.category))
+		if (cat_colors.ContainsKey(category))
 		{
-			mat.SetColor("_Color", cat_colors[task.category]);
+			mat.SetColor("_Color", cat_colors[category]);
 		}
 		else
 		{
@@ -68,13 +77,17 @@ public class DatalineDisplay : MonoBehaviour {
 		Destroy(new_block, dataline.Network.delay);
 	}
 	
-	private void DataDownload(Data data)
+	private void UnpackData(Data data)
 	{
-		Debug.Log(data.category);
+		RpcDataDownload(data.size, data.category);
+	}
 
+	[ClientRpc]
+	private void RpcDataDownload(float size, string category)
+	{
 		//Math to make the next three things work
-		float adjustment = (-Vector3.Distance(start.position, end.position) * data.size) / (2 * (data.size - dataline.Network.delay));
-		float speed = (-Vector3.Distance(start.position, end.position)) / (data.size - dataline.Network.delay);
+		float adjustment = (-Vector3.Distance(start.position, end.position) * size) / (2 * (size - dataline.Network.delay));
+		float speed = (-Vector3.Distance(start.position, end.position)) / (size - dataline.Network.delay);
 
 		Vector3 direction = (start.position - end.position).normalized;
 
@@ -91,9 +104,9 @@ public class DatalineDisplay : MonoBehaviour {
 
 		//Makes the block appropriately pretty
 		Material mat = new_block.GetComponent<Renderer>().material;
-		if (cat_colors.ContainsKey(data.category))
+		if (cat_colors.ContainsKey(category))
 		{
-			mat.SetColor("_Color", cat_colors[data.category]);
+			mat.SetColor("_Color", cat_colors[category]);
 		}
 		else
 		{

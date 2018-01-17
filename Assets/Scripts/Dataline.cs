@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dataline : MonoBehaviour
+public class Dataline : MonoBehaviour, ITriggerTaskable
 {
 
 	public bool active = true;
@@ -23,9 +23,14 @@ public class Dataline : MonoBehaviour
 	private List<Data> data_on_line;
 
 	public delegate void TaskHandler(Task task);
-	public event TaskHandler TaskUploaded;
+	public event TaskHandler EventTaskUploaded;
 	public delegate void DataHandler(Data data);
-	public event DataHandler DataDownloaded;
+	public event DataHandler EventDataDownloaded;
+
+	public void TriggerTask()
+	{
+		SwitchMode();
+	}
 
 	private void Awake()
 	{
@@ -125,9 +130,9 @@ public class Dataline : MonoBehaviour
 				task_buffer.Remove(task_to_upload);
 
 				//Raises event to any dataline displays that might be listening
-				if (TaskUploaded != null)
+				if (EventTaskUploaded != null)
 				{
-					TaskUploaded(task_to_upload);
+					EventTaskUploaded(task_to_upload);
 				}
 
 				Invoke("FinishUpload", task_to_upload.size);
@@ -180,9 +185,9 @@ public class Dataline : MonoBehaviour
 				data_on_line.Add(data_to_download);
 				data_buffer.Remove(data_to_download);
 
-				if(DataDownloaded != null)
+				if(EventDataDownloaded != null)
 				{
-					DataDownloaded(data_to_download);
+					EventDataDownloaded(data_to_download);
 				}
 
 				Invoke("FinishDownload", data_to_download.size);
