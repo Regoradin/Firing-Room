@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Dataline : MonoBehaviour, ITriggerTaskable
+public class Dataline : NetworkBehaviour, ITriggerTaskable
 {
 
 	public bool active = true;
@@ -27,9 +28,13 @@ public class Dataline : MonoBehaviour, ITriggerTaskable
 	public delegate void DataHandler(Data data);
 	public event DataHandler EventDataDownloaded;
 
+	[SyncVar(hook = "SwitchMode")]
+	private bool triggered = false;
+
 	public void TriggerTask()
 	{
-		SwitchMode();
+		Debug.Log("Triggered");
+		triggered = !triggered;
 	}
 
 	private void Awake()
@@ -65,9 +70,9 @@ public class Dataline : MonoBehaviour, ITriggerTaskable
 	}
 
 	/// <summary>
-	/// Switches between uplink and downlink.
+	/// Switches between uplink and downlink. The input can be ignored, and only exists to be compatible with UNet.
 	/// </summary>
-	public void SwitchMode()
+	public void SwitchMode(bool b)
 	{
 		if (is_uplink)
 		{
