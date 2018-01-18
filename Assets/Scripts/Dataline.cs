@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Dataline : NetworkBehaviour, ITriggerTaskable
+public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 {
 
 	public bool active = true;
@@ -29,12 +29,44 @@ public class Dataline : NetworkBehaviour, ITriggerTaskable
 	public event DataHandler EventDataDownloaded;
 
 	[SyncVar(hook = "SwitchMode")]
-	private bool triggered = false;
+	private bool switch_triggered = false;
+	[SyncVar (hook = "ClearLine")]
+	private bool clear_triggered = false;
 
-	public void TriggerTask()
+	public void BoolTask(bool b)
 	{
-		Debug.Log("Triggered");
-		triggered = !triggered;
+		if (b)
+		{
+			switch_triggered = !switch_triggered;
+		}
+		else
+		{
+			clear_triggered = !clear_triggered;
+		}
+	}
+	
+	public void StringTask(string category)
+	{
+		if (categories_enabled.Contains(category))
+		{
+			categories_enabled.Remove(category);
+		}
+		else
+		{
+			categories_enabled.Add(category);
+		}
+	}
+
+	private void ClearLine(bool b)
+	{
+		if (is_uplink)
+		{
+			task_buffer.Clear();
+		}
+		else
+		{
+			data_buffer.Clear();
+		}
 	}
 
 	private void Awake()
