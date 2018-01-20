@@ -14,7 +14,7 @@ public class FuelSystemReporter : Reporter {
 		fuel = GetComponent<FuelSystem>();
 	}
 
-	protected override void RpcReport()
+	protected override void Report()
 	{
 		network.AddData(new BoolData(valve_displays, fuel.valve_open, "Engines", .1f));
 		network.AddData(new BoolData(pump_displays, fuel.pump_on, "Engines", .1f));

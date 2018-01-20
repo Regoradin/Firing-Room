@@ -32,7 +32,7 @@ public class VelocityReporter : Reporter, ITriggerTaskable {
 		rb = GetComponentInParent<Rigidbody>();
 	}
 
-	protected override void RpcReport()
+	protected override void Report()
 	{
 
 		float calculated_velocity = rb.velocity.magnitude;

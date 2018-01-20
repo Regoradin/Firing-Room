@@ -22,13 +22,12 @@ public class Reporter : NetworkBehaviour {
 			{
 				last_message_time = Time.time;
 
-				RpcReport();
+				Report();
 			}
 		}
 	}
 
-	[ClientRpc]
-	protected virtual void RpcReport()
+	protected virtual void Report()
 	{
 		Debug.Log("Report not implemented on " + name);
 	}
