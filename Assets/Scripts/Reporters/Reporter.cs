@@ -8,6 +8,7 @@ public class Reporter : NetworkBehaviour {
 	protected Network network;
 	private float last_message_time;
 
+	[SyncVar]
 	public float delay;
 
 	protected void Start () {
