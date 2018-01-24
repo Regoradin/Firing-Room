@@ -34,14 +34,6 @@ public class Network : NetworkBehaviour {
 		}
 	}
 
-	//DEPRACATED. ONLY USED FOR DEBUG DATA B/C I'M LAZY
-	//The following fields are data storage fields, which can be modified by incoming Data and read by any interested displays or readouts in mission control.
-	[HideInInspector][SyncVar]
-	public string debug_message = "debug";
-	[HideInInspector][SyncVar]
-	public float longitude, latitude, altitude;
-
-
 	private void Awake()
 	{
 		datalines = new List<Dataline>();

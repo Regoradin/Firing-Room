@@ -15,7 +15,7 @@ public class DebugData : Data {
 
 	public override void Activate()
 	{
-		GameObject.Find("Network").GetComponent<Network>().debug_message = message;
+		Debug.Log(message);
 	}
 
 }
