@@ -87,13 +87,6 @@ public class DatalineDisplay : NetworkBehaviour{
 	[ClientRpc]
 	private void RpcDataDownload(float size, string category)
 	{
-		//making sure it doesn't divide by 0. This needs to get worked out to make sure the adjustment is right, and make sure it doesn't go backwards ever, and make sure this is done for the other direction
-		if(size == dataline.Network.delay)
-		{
-			Debug.Log("adjusting");
-			size -= .1f;
-		}
-
 		//Math to make the next three things work
 		float distance = Vector3.Distance(start.position, end.position);
 		float speed = distance / dataline.Network.delay;
