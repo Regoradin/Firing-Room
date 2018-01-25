@@ -47,21 +47,22 @@ public class DatalineDisplay : NetworkBehaviour{
 	private void RpcTaskUpload(float size, string category)
 	{
 		//Math to make the next three things work
-		float adjustment = (-Vector3.Distance(start.position, end.position) * size) / (2 * (size - dataline.Network.delay));
-		float speed = (-Vector3.Distance(start.position, end.position)) / (size - dataline.Network.delay);
+		float distance = Vector3.Distance(start.position, end.position);
+		float speed = distance / dataline.Network.delay;
 
 		Vector3 direction = (end.position - start.position).normalized;
 
 		//Makes a new block behind the starting position with the same rotation as the parent object
-		Vector3 starting_position = start.position - (direction * adjustment);
+		Vector3 starting_position = start.position - (distance / dataline.Network.delay * size * direction / 2);
 		GameObject new_block = Instantiate(block, starting_position, transform.rotation);
 
 		//Makes the block go
 		Vector3 velocity = direction.normalized * speed;
 		new_block.GetComponent<Rigidbody>().velocity = velocity;
-	
+
 		//Makes the block appropriately skinny
-		new_block.transform.localScale = new Vector3(new_block.transform.localScale.x, new_block.transform.localScale.y, adjustment * 2);
+		//new_block.transform.localScale = new Vector3(new_block.transform.localScale.x, new_block.transform.localScale.y, adjustment * 2);
+		new_block.transform.localScale = new Vector3(new_block.transform.localScale.x, new_block.transform.localScale.y, (distance / dataline.Network.delay) * size);
 
 		//Makes the block appropriately pretty
 		Material mat = new_block.GetComponent<Renderer>().material;
@@ -75,7 +76,7 @@ public class DatalineDisplay : NetworkBehaviour{
 		}
 
 
-		Destroy(new_block, dataline.Network.delay);
+		Destroy(new_block, dataline.Network.delay + size);
 	}
 	
 	private void UnpackData(Data data)
@@ -89,17 +90,18 @@ public class DatalineDisplay : NetworkBehaviour{
 		//making sure it doesn't divide by 0. This needs to get worked out to make sure the adjustment is right, and make sure it doesn't go backwards ever, and make sure this is done for the other direction
 		if(size == dataline.Network.delay)
 		{
+			Debug.Log("adjusting");
 			size -= .1f;
 		}
 
 		//Math to make the next three things work
-		float adjustment = (-Vector3.Distance(start.position, end.position) * size) / (2 * (size - dataline.Network.delay));
-		float speed = (-Vector3.Distance(start.position, end.position)) / (size - dataline.Network.delay);
+		float distance = Vector3.Distance(start.position, end.position);
+		float speed = distance / dataline.Network.delay;
 
 		Vector3 direction = (start.position - end.position).normalized;
 
 		//Makes a new block behind the starting position with the same rotation as the parent object
-		Vector3 starting_position = end.position + (direction * adjustment);
+		Vector3 starting_position = end.position - (distance / dataline.Network.delay * size * direction / 2);
 		GameObject new_block = Instantiate(block, starting_position, transform.rotation);
 
 		//Makes the block go
@@ -107,7 +109,7 @@ public class DatalineDisplay : NetworkBehaviour{
 		new_block.GetComponent<Rigidbody>().velocity = velocity;
 
 		//Makes the block appropriately skinny
-		new_block.transform.localScale = new Vector3(new_block.transform.localScale.x, new_block.transform.localScale.y, adjustment * 2);
+		new_block.transform.localScale = new Vector3(new_block.transform.localScale.x, new_block.transform.localScale.y, (distance / dataline.Network.delay) * size);
 
 		//Makes the block appropriately pretty
 		Material mat = new_block.GetComponent<Renderer>().material;
@@ -121,6 +123,6 @@ public class DatalineDisplay : NetworkBehaviour{
 		}
 
 
-		Destroy(new_block, dataline.Network.delay);
+		Destroy(new_block, dataline.Network.delay + size);
 	}
 }

@@ -224,6 +224,10 @@ public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 
 				if(EventDataDownloaded != null)
 				{
+					if (data_to_download.category == "Debug")
+					{
+						Debug.Log("EventDataDownloaded");
+					}
 					EventDataDownloaded(data_to_download);
 				}
 
