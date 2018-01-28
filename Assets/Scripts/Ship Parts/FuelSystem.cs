@@ -40,6 +40,10 @@ public class FuelSystem : NetworkBehaviour, IBoolTaskable {
 			{
 				engine.CheckFuelSystems();
 			}
+			if(fuel >= max_fuel)
+			{
+				fuel = max_fuel;
+			}
 		}
 	}
 	public float pool_rate;

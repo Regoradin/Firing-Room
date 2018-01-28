@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class TVData : Data {
 
@@ -16,6 +17,14 @@ public class TVData : Data {
 
 	public override void Activate()
 	{
+		//		mat.mainTexture = tex;
+		RpcSetTexture();
+	}
+
+	[ClientRpc]
+	private void RpcSetTexture()
+	{
+		Debug.Log("Calling RPC");
 		mat.mainTexture = tex;
 	}
 
