@@ -178,6 +178,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 			if (Mathf.Approximately(current_thrust, 0))
 			{
+				current_thrust = 0;
 				ignited = false;
 			}
 		}
