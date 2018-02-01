@@ -24,7 +24,6 @@ public class TVData : Data {
 	[ClientRpc]
 	private void RpcSetTexture()
 	{
-		Debug.Log("Calling RPC");
 		mat.mainTexture = tex;
 	}
 

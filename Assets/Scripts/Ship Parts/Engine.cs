@@ -7,6 +7,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	private Rigidbody rb;
 
+	public List<FuelSystem> linked_fuelSystems;
 	private List<FuelSystem> LOX;
 	private List<FuelSystem> LH2;
 	private int max_fuel_systems;
@@ -60,8 +61,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	private void Start()
 	{
-		Debug.Log("Starting Engine");
-		foreach (FuelSystem fuel in GetComponentsInChildren<FuelSystem>())
+		foreach (FuelSystem fuel in linked_fuelSystems)
 		{
 			if (fuel.is_LOX)
 			{
@@ -164,6 +164,9 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 			}
 
 			//Make sure that if this changes, you change the code on StagedEngine
+			Debug.Log("adding force: " + current_thrust);
+			Debug.Log("limited thrust: " + limited_thrust);
+			Debug.Log("target thrust: " + target_thrust);	
 			rb.AddForceAtPosition(transform.InverseTransformVector(Vector3.up * current_thrust), engine_location.position);
 
 			//deplete fuel

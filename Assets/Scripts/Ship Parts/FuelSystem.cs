@@ -38,7 +38,11 @@ public class FuelSystem : NetworkBehaviour, IBoolTaskable {
 			fuel = value;
 			if (fuel <= 0)
 			{
-				engine.CheckFuelSystems();
+				Debug.Log("Run out of fuel");
+				foreach (Engine engine in engines)
+				{
+					engine.CheckFuelSystems();
+				}
 			}
 			if(fuel >= max_fuel)
 			{
@@ -48,27 +52,28 @@ public class FuelSystem : NetworkBehaviour, IBoolTaskable {
 	}
 	public float pool_rate;
 
-	private Engine engine;
+	public List<Engine> engines;
 
 	private void Awake()
 	{
 		fuel = max_fuel;
 	}
 
-	private void Start()
-	{
-		engine = GetComponentInParent<Engine>();
-	}
-
 	private void ToggleValve(bool b)
 	{
-		valve_open = b;
-		engine.CheckFuelSystems();
+		valve_open = !valve_open;
+		foreach (Engine engine in engines)
+		{
+			engine.CheckFuelSystems();
+		}
 	}
 
 	private void TogglePump(bool b)
 	{
-		pump_on = b;
-		engine.CheckFuelSystems();
+		pump_on = !pump_on;
+		foreach (Engine engine in engines)
+		{
+			engine.CheckFuelSystems();
+		}
 	}
 }
