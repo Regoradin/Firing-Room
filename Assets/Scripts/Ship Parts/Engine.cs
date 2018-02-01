@@ -30,7 +30,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	private float pooled = 0;   //currently this value is used for both the radius and the force. Tweaking and experimentation will be required.
 	public float pooled_force_modifier;
-	public Vector3 engine_offset; //currently is just the position, but can eventually be set to have torques and stuff
+	public Transform engine_location; //currently is just the position, but can eventually be set to have torques and stuff
 
 	[HideInInspector]
 	[SyncVar(hook = "SetThrust")]
@@ -91,7 +91,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 			staged_engine.rb = rb;
 			staged_engine.current_thrust = current_thrust;
-			staged_engine.engine_offset = engine_offset;
+			staged_engine.engine_location = engine_location;
 			//This next bit may very well fail if a bit of fuel is destroyed before OnDestroy is called... but that shouldn't happen b/c things are actually destroyed last
 			float LOX = 0;
 			float LH2 = 0;
@@ -137,7 +137,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 		{
 			if(pooled > 0)
 			{
-				rb.AddExplosionForce(pooled, transform.position + engine_offset, pooled);
+				rb.AddExplosionForce(pooled, engine_location.position, pooled);
 				pooled = 0;
 			}
 
@@ -164,7 +164,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 			}
 
 			//Make sure that if this changes, you change the code on StagedEngine
-			rb.AddForceAtPosition(transform.InverseTransformVector(Vector3.up * current_thrust), transform.position + engine_offset);
+			rb.AddForceAtPosition(transform.InverseTransformVector(Vector3.up * current_thrust), engine_location.position);
 
 			//deplete fuel
 			foreach(FuelSystem fuel in active_LH2)
