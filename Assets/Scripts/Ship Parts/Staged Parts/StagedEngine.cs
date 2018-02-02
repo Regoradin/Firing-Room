@@ -14,7 +14,7 @@ public class StagedEngine : MonoBehaviour {
 	{
 		if (fuel > 0)
 		{
-			rb.AddForceAtPosition(transform.InverseTransformVector(Vector3.up * current_thrust), engine_location.position);
+			rb.AddForceAtPosition(transform.TransformVector(Vector3.forward * current_thrust), engine_location.position);
 			fuel -= current_thrust;
 			Debug.Log("Staged engine fuel: " + fuel);
 		}

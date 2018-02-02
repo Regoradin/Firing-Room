@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 
 public class Staging : NetworkBehaviour, ITriggerTaskable
 {
+	//Alright so the way this is supposed to work is that the next_stages and connected_bodies are the stages below it. You call staging on this when it should be used.
+
 	public List<Rigidbody> connected_bodies;
 	public List<Staging> next_stages;   //every stage down the tree will be staged, but not actually break the joints.
 

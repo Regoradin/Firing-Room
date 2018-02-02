@@ -164,10 +164,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 			}
 
 			//Make sure that if this changes, you change the code on StagedEngine
-			Debug.Log("adding force: " + current_thrust);
-			Debug.Log("limited thrust: " + limited_thrust);
-			Debug.Log("target thrust: " + target_thrust);	
-			rb.AddForceAtPosition(transform.InverseTransformVector(Vector3.up * current_thrust), engine_location.position);
+			rb.AddForceAtPosition(transform.TransformVector(Vector3.forward * current_thrust), engine_location.position);
 
 			//deplete fuel
 			foreach(FuelSystem fuel in active_LH2)

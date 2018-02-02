@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class SRB : NetworkBehaviour, IBoolTaskable {
 
 	private Rigidbody rb;
-	private Vector3 thrust_position;
+	public transform thrust_position;
 
 	public float thrust;
 	public float time;
@@ -34,14 +34,13 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 	private void Start()
 	{
 		rb = GetComponentInParent<Rigidbody>();
-		thrust_position = transform.position;
 	}
 
 	private void FixedUpdate()
 	{
 		if (firing && !spent)
 		{
-			rb.AddForceAtPosition(thrust * Vector3.up, thrust_position);
+			rb.AddForceAtPosition(transform.TransformVector(thrust * Vector3.up), thrust_position.position);
 
 			if (Time.time >= end_time)
 			{
