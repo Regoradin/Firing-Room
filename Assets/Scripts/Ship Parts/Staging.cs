@@ -58,14 +58,18 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 					Destroy(joint);
 				}
 			}
-			foreach(MonoBehaviour script in GetComponentsInChildren<MonoBehaviour>())
+			foreach (Staging stage in next_stages)
+			{
+				foreach (MonoBehaviour script in stage.GetComponentsInChildren<MonoBehaviour>())
 				{
-					if (!(script is NetworkIdentity))
+					Debug.Log(script.name + stage.gameObject.name);
+					if (!(script is NetworkIdentity) && !(script is Staging))
 					{
 						Destroy(script);
 					}
 				}
-			foreach(Staging staging in next_stages)
+			}
+			foreach (Staging staging in next_stages)
 			{
 				staging.Stage(true, false);
 			}
