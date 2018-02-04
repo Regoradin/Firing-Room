@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class SRB : NetworkBehaviour, IBoolTaskable {
 
 	private Rigidbody rb;
-	public transform thrust_position;
+	public Transform thrust_position;
 
 	public float thrust;
 	public float time;

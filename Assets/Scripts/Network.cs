@@ -102,13 +102,18 @@ public class Network : NetworkBehaviour {
 				}
 			}
 		}
-		if (available_datalines.Count == 0)
+		if (available_datalines.Count < data.channels)
 		{
-			Debug.Log("No active datalines!");
+			Debug.Log("Not enough active datalines!");
 		}
 
-		int i = Random.Range(0, available_datalines.Count);
+		for (int c = 1; c < data.channels; c++)
+		{
+			//adds a copy of the data to multiple channels for larger data. This doesn't guarantee that it will all be at the same time, as some may have a buffer to go through.
+			int i = Random.Range(0, available_datalines.Count);
 
-		available_datalines[i].AddData(data);
+			available_datalines[i].AddData(data);
+			available_datalines.Remove(available_datalines[i]);
+		}
 	}
 }
