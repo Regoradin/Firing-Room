@@ -88,7 +88,16 @@ public class Throttle : NetworkBehaviour {
 			last_mouse_position = Input.mousePosition.y;
 		}
 
-		anim.SetFloat("Level", level);
+		if(level > max_value)
+		{
+			level = max_value;
+		}
+		if(level < min_value)
+		{
+			level = min_value;
+		}
+
+		anim.SetFloat("Blend", level/(max_value - min_value));
 	}
 
 	private void OnMouseUp()
