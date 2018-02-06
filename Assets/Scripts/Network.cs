@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Network : NetworkBehaviour {
+public class Network : NetworkBehaviour
+{
 
 	[HideInInspector]
 	public float delay; //if delay is -1, then there is no connection, but datas and tasks will still be added onto buffers.
@@ -20,9 +21,9 @@ public class Network : NetworkBehaviour {
 		set
 		{
 			channels = value;
-			for(int i = 0; i < datalines.Count; i++)
+			for (int i = 0; i < datalines.Count; i++)
 			{
-				if(i < channels)
+				if (i < channels)
 				{
 					datalines[i].active = true;
 				}
@@ -107,13 +108,8 @@ public class Network : NetworkBehaviour {
 			Debug.Log("Not enough active datalines!");
 		}
 
-		for (int c = 1; c < data.channels; c++)
-		{
-			//adds a copy of the data to multiple channels for larger data. This doesn't guarantee that it will all be at the same time, as some may have a buffer to go through.
-			int i = Random.Range(0, available_datalines.Count);
+		int i = Random.Range(0, available_datalines.Count);
 
-			available_datalines[i].AddData(data);
-			available_datalines.Remove(available_datalines[i]);
-		}
+		available_datalines[i].AddData(data);
 	}
 }

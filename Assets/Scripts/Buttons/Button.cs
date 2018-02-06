@@ -45,6 +45,7 @@ public abstract class Button : NetworkBehaviour {
 	{
 		//Because NetworkAnimators are weird with triggers.
 		GetComponent<NetworkAnimator>().SetTrigger("ButtonPressed");
+		light.GetComponent<NetworkAnimator>().SetTrigger("ButtonPressed");
 	}
 
 	protected void ClickEvent()
@@ -66,13 +67,13 @@ public abstract class Button : NetworkBehaviour {
 	{
 		lit = true;
 		mat.SetColor("_EmissionColor", lit_color);
-		light.color = lit_color;
+		//light.color = lit_color;
 	}
 	public void Unlight()
 	{
 		lit = false;
 		mat.SetColor("_EmissionColor", unlit_color);
-		light.color = unlit_color;
+		//light.color = unlit_color;
 
 	}
 }
