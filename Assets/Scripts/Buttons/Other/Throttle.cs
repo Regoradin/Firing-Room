@@ -18,10 +18,12 @@ public class Throttle : NetworkBehaviour {
 
 	[Header("Throttle Settings")]
 	public bool is_horizontal = false;
-	public bool is_backwards = false;	//i.e. does it increase to the bottom or to the left
+	public bool is_backwards = false;   //i.e. does it increase to the bottom or to the left
+	public bool is_mousewheel = false;
 	public float max_value = 1;
 	public float min_value = 0;
 	public float sensitivity = 1;
+	public float mouse_deadzone = 0;
 
 	private float level = 0;
 	private float last_mouse_position;
@@ -57,28 +59,30 @@ public class Throttle : NetworkBehaviour {
 		{
 			new_mouse_position = Input.mousePosition.y;
 		}
+
 		if (is_backwards)
 		{
-			if (new_mouse_position > last_mouse_position)
+			if (new_mouse_position > last_mouse_position + mouse_deadzone)
 			{
 				level -= sensitivity;
 			}
-			if (new_mouse_position < last_mouse_position)
+			if (new_mouse_position < last_mouse_position - mouse_deadzone)
 			{
 				level += sensitivity;
 			}
 		}
 		else
 		{
-			if (new_mouse_position < last_mouse_position)
+			if (new_mouse_position < last_mouse_position - mouse_deadzone)
 			{
 				level -= sensitivity;
 			}
-			if (new_mouse_position > last_mouse_position)
+			if (new_mouse_position > last_mouse_position + mouse_deadzone)
 			{
 				level += sensitivity;
 			}
 		}
+
 		if (is_horizontal)
 		{
 			last_mouse_position = Input.mousePosition.x;
@@ -88,21 +92,55 @@ public class Throttle : NetworkBehaviour {
 			last_mouse_position = Input.mousePosition.y;
 		}
 
-		if(level > max_value)
+		if (level > max_value)
 		{
 			level = max_value;
 		}
-		if(level < min_value)
+		if (level < min_value)
 		{
 			level = min_value;
 		}
 
-		anim.SetFloat("Blend", level/(max_value - min_value));
+		anim.SetFloat("Blend", level / (max_value - min_value));
+	}
+
+	private void OnMouseOver()
+	{
+		if (is_mousewheel)
+		{
+			if (is_backwards)
+			{
+				level -= sensitivity * Input.mouseScrollDelta.y;
+			}
+			else
+			{
+				level += sensitivity * Input.mouseScrollDelta.y;
+			}
+
+			if (level > max_value)
+			{
+				level = max_value;
+			}
+			if (level < min_value)
+			{
+				level = min_value;
+			}
+
+			anim.SetFloat("Blend", level / (max_value - min_value));
+		}
 	}
 
 	private void OnMouseUp()
 	{
 		network.AddTask(new FloatTask(target, level, category, size, send_to_consoles, channels));
+	}
+
+	private void OnMouseExit()
+	{
+		if (is_mousewheel)
+		{
+			network.AddTask(new FloatTask(target, level, category, size, send_to_consoles, channels));
+		}
 	}
 
 
