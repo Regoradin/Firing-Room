@@ -132,15 +132,21 @@ public class Throttle : NetworkBehaviour {
 
 	private void OnMouseUp()
 	{
-		network.AddTask(new FloatTask(target, level, category, size, send_to_consoles, channels));
+		CmdAddTask();
 	}
 
 	private void OnMouseExit()
 	{
 		if (is_mousewheel)
 		{
-			network.AddTask(new FloatTask(target, level, category, size, send_to_consoles, channels));
+			CmdAddTask();
 		}
+	}
+
+	[Command]
+	private void CmdAddTask()
+	{
+		network.AddTask(new FloatTask(target, level, category, size, send_to_consoles, channels));
 	}
 
 
