@@ -33,6 +33,11 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 	public float pooled_force_modifier;
 	public Transform engine_location; //currently is just the position, but can eventually be set to have torques and stuff
 
+	[Header("Particle Settings")]
+	private ParticleSystem particles;
+	public float particle_min;
+	public float particle_max;
+
 	[HideInInspector]
 	[SyncVar(hook = "SetThrust")]
 	private float level;
@@ -57,6 +62,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 		LH2 = new List<FuelSystem>();
 		active_LOX = new List<FuelSystem>();
 		active_LH2 = new List<FuelSystem>();
+		particles = GetComponentInChildren<ParticleSystem>();
 	}
 
 	private void Start()
@@ -217,6 +223,21 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 	{
 		level = new_level;
 		target_thrust = max_thrust * new_level;
+	}
+
+	private void Update()
+	{
+		if (ignited && !particles.isPlaying)
+		{
+			particles.Play();
+		}
+		if(!ignited && particles.isPlaying)
+		{
+			particles.Stop();
+		}
+		var main = particles.main;
+		main.startLifetime = particle_min + (particle_max - particle_min) * level;
+		
 	}
 
 }

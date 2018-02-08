@@ -24,9 +24,13 @@ public class Throttle : NetworkBehaviour {
 	public float min_value = 0;
 	public float sensitivity = 1;
 	public float mouse_deadzone = 0;
+	public float held_delay;
 
 	private float level = 0;
 	private float last_mouse_position;
+
+	private float last_time = 0;
+	private float last_level;
 
 	private void Awake()
 	{
@@ -102,6 +106,17 @@ public class Throttle : NetworkBehaviour {
 		}
 
 		anim.SetFloat("Blend", level / (max_value - min_value));
+
+		//sends a task if the throttle is held in place
+		if (last_time + held_delay <= Time.time)
+		{
+			last_time = Time.time;
+			if (last_level == level)
+			{
+				CmdAddTask();
+			}
+			last_level = level;
+		}
 	}
 
 	private void OnMouseOver()
@@ -132,7 +147,10 @@ public class Throttle : NetworkBehaviour {
 
 	private void OnMouseUp()
 	{
-		CmdAddTask();
+		if (last_level != level)
+		{
+			CmdAddTask();
+		}
 	}
 
 	private void OnMouseExit()
