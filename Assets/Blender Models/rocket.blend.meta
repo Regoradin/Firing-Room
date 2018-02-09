@@ -11,12 +11,22 @@ ModelImporter:
     100006: Stage_3
     100008: SRBs
     100010: SRB_Array_Target
+    100012: SRB
+    100014: SRB_1
+    100016: SRB_2
+    100018: SRB_3
+    100020: SRB_4
     400000: //RootNode
     400002: Stage_1
     400004: Stage_2
     400006: Stage_3
     400008: SRBs
     400010: SRB_Array_Target
+    400012: SRB
+    400014: SRB_1
+    400016: SRB_2
+    400018: SRB_3
+    400020: SRB_4
     2100000: unnamed
     2100002: White
     2100004: Black
@@ -26,14 +36,29 @@ ModelImporter:
     2300002: Stage_2
     2300004: Stage_3
     2300006: SRBs
+    2300008: SRB
+    2300010: SRB_1
+    2300012: SRB_2
+    2300014: SRB_3
+    2300016: SRB_4
     3300000: Stage_1
     3300002: Stage_2
     3300004: Stage_3
     3300006: SRBs
+    3300008: SRB
+    3300010: SRB_1
+    3300012: SRB_2
+    3300014: SRB_3
+    3300016: SRB_4
     4300000: Stage_3
     4300002: Stage_2
     4300004: Stage_1
     4300006: SRBs
+    4300008: SRB
+    4300010: SRB_4
+    4300012: SRB_3
+    4300014: SRB_2
+    4300016: SRB_1
     7400000: Default Take
     9500000: //RootNode
   externalObjects: {}
