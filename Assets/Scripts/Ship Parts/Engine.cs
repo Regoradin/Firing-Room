@@ -30,7 +30,6 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 	public float thrust_increment;
 
 	private float pooled = 0;   //currently this value is used for both the radius and the force. Tweaking and experimentation will be required.
-	public float pooled_force_modifier;
 	public Transform engine_location; //currently is just the position, but can eventually be set to have torques and stuff
 
 	[Header("Particle Settings")]
@@ -82,6 +81,9 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 		max_fuel_systems = LH2.Count > LOX.Count ? LOX.Count : LH2.Count;
 
 		CheckFuelSystems();
+
+		var main = particles.main;
+		main.maxParticles = (int)(particle_max * particles.emission.rateOverTime.constant);
 	}
 
 	private bool is_quitting = false;

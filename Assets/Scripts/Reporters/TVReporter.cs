@@ -22,7 +22,7 @@ public class TVReporter : Reporter, IFloatTaskable, IVector3Taskable {
 
 	public void FloatTask(float fps)
 	{
-		delay = 1 / fps;
+		frequency = fps;
 	}
 	public void Vector3Task(Vector3 new_res)
 	{

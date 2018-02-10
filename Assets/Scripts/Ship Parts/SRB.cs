@@ -7,6 +7,7 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 
 	private Rigidbody rb;
 	public Transform thrust_position;
+	private ParticleSystem particles;
 
 	public float thrust;
 	public float time;
@@ -34,6 +35,7 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 	private void Start()
 	{
 		rb = GetComponentInParent<Rigidbody>();
+		particles = GetComponentInChildren<ParticleSystem>();
 	}
 
 	private void FixedUpdate()
@@ -46,6 +48,7 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 			{
 				firing = false;
 				spent = true;
+				particles.Stop();
 			}
 		}
 	}
@@ -56,6 +59,7 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 		{
 			firing = b;
 			end_time = Time.time + time;
+			particles.Play();
 		}
 	}
 

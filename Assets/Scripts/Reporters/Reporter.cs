@@ -9,7 +9,7 @@ public class Reporter : NetworkBehaviour {
 	private float last_message_time;
 
 	[SyncVar]
-	public float delay;
+	public float frequency;
 
 	protected void Start () {
 		network = GameObject.Find("Network").GetComponent<Network>();
@@ -19,7 +19,7 @@ public class Reporter : NetworkBehaviour {
 	{
 		if (isServer)
 		{
-			if (Time.time >= last_message_time + delay)
+			if (Time.time >= last_message_time + 1/frequency)
 			{
 				last_message_time = Time.time;
 
