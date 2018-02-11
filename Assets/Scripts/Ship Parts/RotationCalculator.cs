@@ -6,8 +6,6 @@ public class RotationCalculator : MonoBehaviour {
 
 	private Rigidbody rb;
 
-	private Vector3 rotation_from_velocity;
-
 	[HideInInspector]
 	public Vector3 current_rotation;
 

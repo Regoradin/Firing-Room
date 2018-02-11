@@ -9,7 +9,7 @@ public class RotationController : NetworkBehaviour, IVector3Taskable, ITriggerTa
 
 	public Transform ship_transform;
 
-	public Vector3 rotation_speed;
+	private Vector3 rotation_speed;
 	[SyncVar(hook = "SetTargetRotation")]
 	private Vector3 target_rotation;
 

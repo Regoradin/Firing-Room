@@ -7,20 +7,20 @@ public class PlanetManager : MonoBehaviour {
 	public Planet planet;
 	public Planet default_planet;
 
-	private Rigidbody rb;
+	public List<Rigidbody> rbs;
 
 
 	public void Start()
 	{
 		planet = default_planet;
-
-		//this might get interesting with staging and things...
-		rb = GetComponentInChildren<Rigidbody>();
 	}
 
 	public void Update()
 	{
-		rb.AddForce(Gravity());
+		foreach (Rigidbody rb in rbs)
+		{
+			rb.AddForce(Gravity());
+		}
 	}
 
 	public Vector3 Gravity()
@@ -31,7 +31,13 @@ public class PlanetManager : MonoBehaviour {
 		float radius = Vector3.Distance(planet.transform.position, transform.position);
 
 
-		Vector3 directed_force = direction * (grav_constant * (planet.GetComponent<Rigidbody>().mass) * (rb.mass)) / (radius * radius);
+		float mass = 0;
+		foreach (Rigidbody rb in rbs)
+		{
+			mass += rb.mass;
+		}
+
+		Vector3 directed_force = direction * (grav_constant * (planet.GetComponent<Rigidbody>().mass) * (mass)) / (radius * radius);
 
 		return directed_force;
 	}

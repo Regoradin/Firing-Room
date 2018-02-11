@@ -12,6 +12,10 @@ public class VelocityReporter : Reporter, ITriggerTaskable {
 	private Rigidbody reference_rb;  //the rigidbody that has the reference 0 velocity;
 	public Rigidbody reference_rb_t;
 	public Rigidbody reference_rb_f;
+	public string category;
+	public float size;
+
+	[HideInInspector]
 	[SyncVar(hook = "SetReference")]
 	public bool rb_choice = true;
 
@@ -41,7 +45,7 @@ public class VelocityReporter : Reporter, ITriggerTaskable {
 			calculated_velocity = (rb.velocity - reference_rb.velocity).magnitude;
 		}
 
-		network.AddData(new FloatData(displays, calculated_velocity, "Guidance", .1f));
+		network.AddData(new FloatData(displays, calculated_velocity, category, size));
 	}
 
 }
