@@ -37,6 +37,7 @@ public class Throttle : NetworkBehaviour {
 		network = GameObject.Find("Network").GetComponent<Network>();
 		target = target_behaviour as IFloatTaskable;
 		anim = GetComponent<Animator>();
+		Debug.Log("animator found on " + anim.name);
 	}
 
 	private void OnMouseDown()
