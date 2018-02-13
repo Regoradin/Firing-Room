@@ -43,6 +43,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	public void FloatTask(float level)
 	{
+		Debug.Log(name + " task floated");
 		this.level = level;
 	}
 
@@ -51,6 +52,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	public void TriggerTask()
 	{
+		Debug.Log(name + " task triggered");
 		this.ignited = true;
 	}
 

@@ -22,6 +22,8 @@ public abstract class Button : NetworkBehaviour {
 	public Color unlit_color;
 	[ColorUsage(true, true, 0f, 8, .125f, 3f)]
 	public Color lit_color;
+	[ColorUsage(true, true, 0f, 8, .125f, 3f)]
+	public Color button_unlit_color;
 	private bool lit = false;
 
 	[Header("Animation Settings")]
@@ -34,18 +36,16 @@ public abstract class Button : NetworkBehaviour {
 
 		rend = GetComponent<Renderer>();
 		mat = rend.material;
-		mat.SetColor("_EmissionColor", unlit_color);
 		light = GetComponentInChildren<Light>();
-		light.color = unlit_color;
-
 		anim = GetComponent<Animator>();
+
+		Unlight();
 	}
 
 	protected void OnMouseDown()
 	{
 		//Because NetworkAnimators are weird with triggers.
 		GetComponent<NetworkAnimator>().SetTrigger("ButtonPressed");
-		light.GetComponent<NetworkAnimator>().SetTrigger("ButtonPressed");
 	}
 
 	protected void ClickEvent()
@@ -66,14 +66,15 @@ public abstract class Button : NetworkBehaviour {
 	public void Light()
 	{
 		lit = true;
+		mat.color = lit_color;
 		mat.SetColor("_EmissionColor", lit_color);
-		//light.color = lit_color;
+		light.color = lit_color;
 	}
 	public void Unlight()
 	{
 		lit = false;
+		mat.color = button_unlit_color;
 		mat.SetColor("_EmissionColor", unlit_color);
-		//light.color = unlit_color;
-
+		light.color = unlit_color;
 	}
 }

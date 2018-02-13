@@ -38,7 +38,7 @@ public class Network : NetworkBehaviour
 	private void Awake()
 	{
 		datalines = new List<Dataline>();
-		foreach (Dataline dataline in GetComponents<Dataline>())
+		foreach (Dataline dataline in GetComponentsInChildren<Dataline>())
 		{
 			datalines.Add(dataline);
 		}
