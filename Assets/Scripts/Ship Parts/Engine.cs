@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 
 public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
+	public bool DEBUG;
+
 	private Rigidbody rb;
 
 	public List<FuelSystem> linked_fuelSystems;
@@ -43,7 +45,6 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	public void FloatTask(float level)
 	{
-		Debug.Log(name + " task floated");
 		this.level = level;
 	}
 
@@ -52,7 +53,6 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	public void TriggerTask()
 	{
-		Debug.Log(name + " task triggered");
 		this.ignited = true;
 	}
 
@@ -240,8 +240,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 			particles.Stop();
 		}
 		var main = particles.main;
-		main.startLifetime = particle_min + (particle_max - particle_min) * level;
-		
+		main.startLifetime = particle_min + (particle_max - particle_min) * (current_thrust / max_thrust);
 	}
 
 }
