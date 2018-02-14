@@ -50,6 +50,10 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	[SyncVar]
 	private bool ignited = false;
+	public bool Ignited
+	{
+		get { return ignited; }
+	}
 
 	public void TriggerTask()
 	{
