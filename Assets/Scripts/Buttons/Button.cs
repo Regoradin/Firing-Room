@@ -63,8 +63,24 @@ public abstract class Button : NetworkBehaviour {
 		}
 	}
 
+	public override void OnStartClient()
+	{
+		base.OnStartClient();
+		if (lit)
+		{
+			Light();
+		}
+		else
+		{
+			Unlight();
+		}
+	}
+
 	public void Light()
 	{
+		mat = GetComponent<Renderer>().material;
+		light = GetComponentInChildren<Light>();
+
 		lit = true;
 		mat.color = lit_color;
 		mat.SetColor("_EmissionColor", lit_color);
@@ -72,6 +88,9 @@ public abstract class Button : NetworkBehaviour {
 	}
 	public void Unlight()
 	{
+		mat = GetComponent<Renderer>().material;
+		light = GetComponentInChildren<Light>();
+
 		lit = false;
 		mat.color = button_unlit_color;
 		mat.SetColor("_EmissionColor", unlit_color);
