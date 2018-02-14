@@ -9,6 +9,7 @@ public class DecimalDisplay : FloatDisplay{
 
 	protected override void SetLevel(float new_level)
 	{
+		Debug.Log("Setting level");
 		level = new_level;
 
 		text.text = level.ToString();

@@ -39,7 +39,10 @@ public abstract class Button : NetworkBehaviour {
 		light = GetComponentInChildren<Light>();
 		anim = GetComponent<Animator>();
 
-		Unlight();
+		if (light_toggle && !lit)
+		{
+			Unlight();
+		}
 	}
 
 	protected void OnMouseDown()
