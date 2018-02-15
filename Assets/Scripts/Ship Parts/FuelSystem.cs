@@ -38,7 +38,7 @@ public class FuelSystem : NetworkBehaviour, IBoolTaskable {
 			fuel = value;
 			if (fuel <= 0)
 			{
-				Debug.Log("Run out of fuel");
+				fuel = 0;
 				foreach (Engine engine in engines)
 				{
 					engine.CheckFuelSystems();

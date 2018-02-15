@@ -5,8 +5,7 @@ using UnityEngine;
 public class FuelSystemReporter : Reporter {
 
 	public FuelSystem fuel;
-	public List<BoolDisplay> valve_displays;
-	public List<BoolDisplay> pump_displays;
+	public List<FloatDisplay> fuel_displays;
 	public string category;
 	public float size;
 
@@ -18,8 +17,7 @@ public class FuelSystemReporter : Reporter {
 
 	protected override void Report()
 	{
-		network.AddData(new BoolData(valve_displays, fuel.valve_open, category, size));
-		network.AddData(new BoolData(pump_displays, fuel.pump_on, category, size));
+		network.AddData(new FloatData(fuel_displays, fuel.Fuel, category, size));
 	}
 
 }
