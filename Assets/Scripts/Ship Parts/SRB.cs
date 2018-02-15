@@ -10,8 +10,12 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 	private ParticleSystem particles;
 
 	public float thrust;
-	public float time;
-	private float end_time;
+	public float max_time;
+	private float remaining_time;
+	public float Remaining_time
+	{
+		get { return remaining_time; }
+	}
 
 	[SyncVar]
 	private bool armed = false;
@@ -26,7 +30,8 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 		}
 		else
 		{
-			armed = !armed;
+			//armed = !armed;
+			armed = true;
 		}
 	}
 
@@ -36,6 +41,7 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 	{
 		rb = GetComponentInParent<Rigidbody>();
 		particles = GetComponentInChildren<ParticleSystem>();
+		remaining_time = max_time;
 	}
 
 	private void FixedUpdate()
@@ -44,8 +50,11 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 		{
 			rb.AddForceAtPosition(transform.TransformVector(thrust * Vector3.up), thrust_position.position);
 
-			if (Time.time >= end_time)
+			remaining_time -= Time.deltaTime;
+
+			if (remaining_time < 0)
 			{
+				Debug.Log(name + " ran out of fuel at " + Time.time + " with remaing time: " + remaining_time + " out of: " + max_time);
 				firing = false;
 				spent = true;
 				particles.Stop();
@@ -58,7 +67,6 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 		if(!spent && armed && b)
 		{
 			firing = b;
-			end_time = Time.time + time;
 			particles.Play();
 		}
 	}
