@@ -30,8 +30,7 @@ public class SRB : NetworkBehaviour, IBoolTaskable {
 		}
 		else
 		{
-			//armed = !armed;
-			armed = true;
+			armed = !armed;
 		}
 	}
 

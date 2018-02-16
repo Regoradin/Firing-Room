@@ -36,6 +36,15 @@ public class FilledDisplay : FloatDisplay
 		transform.localScale = new Vector3(new_scale, transform.localScale.y, transform.localScale.z);
 		transform.position = new Vector3(new_midpoint, transform.position.y, transform.position.z);
 
+		if (level == 0)
+		{
+			GetComponent<Renderer>().enabled = false;
+		}
+		else
+		{
+			GetComponent<Renderer>().enabled = true;
+		}
+
 	}
 
 }
