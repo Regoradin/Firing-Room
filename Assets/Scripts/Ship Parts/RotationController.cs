@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class RotationController : NetworkBehaviour, IVector3Taskable, ITriggerTaskable {
+public class RotationController : ShipPart, IVector3Taskable, ITriggerTaskable {
 
 	private RotationCalculator rot_calc;
 

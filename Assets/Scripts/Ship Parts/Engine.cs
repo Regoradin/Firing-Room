@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
+public class Engine : ShipPart, ITriggerTaskable, IFloatTaskable {
 
 	public bool DEBUG;
 
@@ -38,6 +38,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 	private ParticleSystem particles;
 	public float particle_min;
 	public float particle_max;
+	private Exhaust exhaust;
 
 	[HideInInspector]
 	[SyncVar(hook = "SetThrust")]
@@ -60,14 +61,17 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 		this.ignited = true;
 	}
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
+
 		rb = GetComponentInParent<Rigidbody>();
 		LOX = new List<FuelSystem>();
 		LH2 = new List<FuelSystem>();
 		active_LOX = new List<FuelSystem>();
 		active_LH2 = new List<FuelSystem>();
 		particles = GetComponentInChildren<ParticleSystem>();
+		exhaust = GetComponentInChildren<Exhaust>();
 	}
 
 	private void Start()
@@ -90,6 +94,7 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 		var main = particles.main;
 		main.maxParticles = (int)(particle_max * particles.emission.rateOverTime.constant);
+		exhaust.on = false;
 	}
 
 	private bool is_quitting = false;
@@ -235,13 +240,15 @@ public class Engine : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	private void Update()
 	{
-		if (ignited && !particles.isPlaying)
+		if (ignited && (!particles.isPlaying || !exhaust.enabled))
 		{
 			particles.Play();
+			exhaust.on = true;
 		}
-		if(!ignited && particles.isPlaying)
+		if(!ignited && (particles.isPlaying || exhaust.enabled))
 		{
 			particles.Stop();
+			exhaust.on = false;
 		}
 		var main = particles.main;
 		main.startLifetime = particle_min + (particle_max - particle_min) * (current_thrust / max_thrust);
