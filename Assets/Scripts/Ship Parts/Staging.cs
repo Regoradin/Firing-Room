@@ -7,10 +7,9 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 {
 	//Alright so the way this is supposed to work is that the next_stages and connected_bodies are the stages below it. You call staging on this when it should be used.
 
-	public List<Rigidbody> connected_bodies;
+	public List<GameObject> connected_bodies;
 	public List<Staging> next_stages;   //every stage down the tree will be staged, but not actually break the joints.
 
-	private List<SpringJoint> joints;
 	
 	[SyncVar(hook = "HookStage")]
 	private bool connected = true;
@@ -27,23 +26,6 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 		Stage(false);
 	}
 
-
-	void Awake()
-	{
-		joints = new List<SpringJoint>();
-	}
-
-	public override void OnStartClient()
-	{
-		foreach (Rigidbody rb in connected_bodies)
-		{
-			SpringJoint joint = gameObject.AddComponent<SpringJoint>();
-			joint.connectedBody = rb;
-			joints.Add(joint);
-		}
-
-	}
-
 	public void Stage(bool b, bool breaking = true)
 	{
 		Debug.Log("stage: " + name);
@@ -52,10 +34,17 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 		{
 			if (breaking)
 			{
-				foreach (SpringJoint joint in joints)
+				foreach(GameObject connected in connected_bodies)
 				{
-					//breaking the joints
-					Destroy(joint);
+					connected.transform.parent = null;
+					Rigidbody rb = connected.AddComponent<Rigidbody>();
+					float mass = 0;
+					foreach(ShipPart part in connected.GetComponentsInChildren<ShipPart>())
+					{
+						mass += part.mass;
+					}
+					rb.mass = mass;
+					rb.useGravity = false;
 				}
 			}
 			foreach (Staging stage in next_stages)

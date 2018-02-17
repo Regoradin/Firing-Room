@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class SRB : NetworkBehaviour, IBoolTaskable {
+public class SRB : ShipPart, IBoolTaskable {
 
 	private Rigidbody rb;
 	public Transform thrust_position;

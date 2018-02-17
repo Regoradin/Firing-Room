@@ -5,12 +5,14 @@ using UnityEngine.Networking;
 
 public class ShipPart : NetworkBehaviour {
 
-	public float max_health;
+	public float max_health = 1;
 	private float health;
 	public float Health
 	{
 		get { return health; }
 	}
+
+	public float mass;
 
 	protected virtual void Awake()
 	{

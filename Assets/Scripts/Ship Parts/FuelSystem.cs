@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class FuelSystem : NetworkBehaviour, IBoolTaskable {
+public class FuelSystem : ShipPart, IBoolTaskable {
 
 	public bool is_LOX; //The alternative is LH2
 
