@@ -8,17 +8,45 @@ public class Exhaust : MonoBehaviour {
 	public bool on;
 	public float damage;
 
-	private void OnTriggerStay(Collider other)
+	private ShipPart[] parts;
+
+	private void Start()
+	{
+		CheckParts();
+	}
+
+	private void CheckParts()
+	{
+		parts = FindObjectsOfType<ShipPart>();
+	}
+
+	private void Update()
 	{
 		if (on)
 		{
-			foreach (ShipPart part in other.GetComponents<ShipPart>())
+			Bounds bounds = GetComponent<Collider>().bounds;
+			bool recheck = false;
+
+			foreach (ShipPart part in parts)
 			{
-				Debug.Log(part.name);
-				part.TakeDamage(damage);
+				if (part.GetComponent<Collider>().bounds.Intersects(bounds))
+				{
+					if (part.Health <= damage)
+					{
+						recheck = true;
+					}
+					part.TakeDamage(damage);
+				}
+
+
 			}
+			if (recheck)
+			{
+				//this is invoked in order to allow any killed parts to actually die and also to create any new post-death parts
+				Invoke("CheckParts", .1f);
+			}
+
 		}
 	}
-
 
 }

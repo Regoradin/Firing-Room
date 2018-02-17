@@ -10,7 +10,7 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 	public List<Rigidbody> connected_bodies;
 	public List<Staging> next_stages;   //every stage down the tree will be staged, but not actually break the joints.
 
-	private List<FixedJoint> joints;
+	private List<SpringJoint> joints;
 	
 	[SyncVar(hook = "HookStage")]
 	private bool connected = true;
@@ -30,14 +30,14 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 
 	void Awake()
 	{
-		joints = new List<FixedJoint>();
+		joints = new List<SpringJoint>();
 	}
 
 	public override void OnStartClient()
 	{
 		foreach (Rigidbody rb in connected_bodies)
 		{
-			FixedJoint joint = gameObject.AddComponent<FixedJoint>();
+			SpringJoint joint = gameObject.AddComponent<SpringJoint>();
 			joint.connectedBody = rb;
 			joints.Add(joint);
 		}
@@ -52,7 +52,7 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 		{
 			if (breaking)
 			{
-				foreach (FixedJoint joint in joints)
+				foreach (SpringJoint joint in joints)
 				{
 					//breaking the joints
 					Destroy(joint);

@@ -111,6 +111,7 @@ public class Engine : ShipPart, ITriggerTaskable, IFloatTaskable {
 			staged_engine.rb = rb;
 			staged_engine.current_thrust = current_thrust;
 			staged_engine.engine_location = engine_location;
+			staged_engine.particles = particles;
 			//This next bit may very well fail if a bit of fuel is destroyed before OnDestroy is called... but that shouldn't happen b/c things are actually destroyed last
 			float LOX = 0;
 			float LH2 = 0;

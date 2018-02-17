@@ -7,6 +7,10 @@ public class ShipPart : NetworkBehaviour {
 
 	public float max_health;
 	private float health;
+	public float Health
+	{
+		get { return health; }
+	}
 
 	protected virtual void Awake()
 	{
