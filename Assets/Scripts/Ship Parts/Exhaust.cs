@@ -35,6 +35,7 @@ public class Exhaust : MonoBehaviour {
 					{
 						recheck = true;
 					}
+					Debug.Log(part.transform.parent.name + " took damage from " + transform.parent.name);
 					part.TakeDamage(damage);
 				}
 
