@@ -8,6 +8,8 @@ public class RotationCalculator : MonoBehaviour {
 
 	[HideInInspector]
 	public Vector3 current_rotation;
+	[HideInInspector]
+	public Vector3 last_rotation;
 
 	private void Awake()
 	{
@@ -24,6 +26,7 @@ public class RotationCalculator : MonoBehaviour {
 		//Keeps the gyro pointed towards velocity
 		transform.rotation = Quaternion.LookRotation(rb.velocity);
 
+		last_rotation = current_rotation;
 		current_rotation = CalculateRotation();
 	}
 

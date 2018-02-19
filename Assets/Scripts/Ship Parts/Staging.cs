@@ -45,6 +45,7 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 					}
 					rb.mass = mass;
 					rb.useGravity = false;
+					rb.angularDrag = 0;
 				}
 			}
 			foreach (Staging stage in next_stages)
