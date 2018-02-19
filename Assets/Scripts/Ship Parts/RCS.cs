@@ -24,14 +24,12 @@ public class RCS : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	public void TriggerTask()
 	{
-		Debug.Log("triggering ");
 		active = !active;
 	}
 	public void FloatTask(float wait_time)
 	{
 		if(active && fueled && !is_maneuvering)
 		{
-			Debug.Log("float tasked");
 			this.wait_time = wait_time;
 		}
 	}
