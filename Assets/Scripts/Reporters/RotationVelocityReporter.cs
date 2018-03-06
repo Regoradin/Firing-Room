@@ -9,9 +9,12 @@ public class RotationVelocityReporter : Reporter {
 	public string category;
 	public float size;
 
+	private Vector3 last_rotation;
+
 	protected override void Report()
 	{
-		Vector3 rotation_velocity = (calculator.current_rotation - calculator.last_rotation) / Time.deltaTime;
+		Vector3 rotation_velocity = (calculator.current_rotation - last_rotation) / Time.deltaTime;
+		last_rotation = calculator.current_rotation;
 
 		network.AddData(new FloatData(x_displays, rotation_velocity.x, category, size));
 		network.AddData(new FloatData(y_displays, rotation_velocity.y, category, size));

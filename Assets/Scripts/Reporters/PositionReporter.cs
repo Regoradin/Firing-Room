@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PositionReporter : MonoBehaviour {
+public class PositionReporter : Reporter {
 
-	// Use this for initialization
-	void Start () {
-		
+	public PlanetManager manager;
+	public List<FloatDisplay> x_displays, y_displays, z_displays;
+	public string category;
+	public float size;
+
+	protected override void Report()
+	{
+		network.AddData(new FloatData(x_displays, manager.LatLongAlt().x, category, size));
+		network.AddData(new FloatData(y_displays, manager.LatLongAlt().y, category, size));
+		network.AddData(new FloatData(z_displays, manager.LatLongAlt().z, category, size));
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }
