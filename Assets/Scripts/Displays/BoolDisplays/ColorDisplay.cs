@@ -6,9 +6,9 @@ public class ColorDisplay : BoolDisplay {
 
 	private Material mat;
 
-	[ColorUsage(true, true, 0f, 8, .125f, 3f)]
+	[ColorUsage(true, true)]
 	public Color off_color;
-	[ColorUsage(true, true, 0f, 8, .125f, 3f)]
+    [ColorUsage(true, true)]
 	public Color on_color;
 
 	private void Awake()

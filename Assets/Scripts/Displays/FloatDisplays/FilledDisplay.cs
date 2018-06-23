@@ -18,12 +18,10 @@ public class FilledDisplay : FloatDisplay
 		if (new_level > 1)
 		{
 			level = 1;
-			Debug.Log("Trying to set level above 1");
 		}
 		else if (new_level < 0)
 		{
 			level = 0;
-			Debug.Log("Trying to set level below 0");
 		}
 		else
 		{

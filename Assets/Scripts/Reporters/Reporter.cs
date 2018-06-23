@@ -6,27 +6,27 @@ using UnityEngine.Networking;
 public class Reporter : NetworkBehaviour {
 
 	protected Network network;
-	private float last_message_time;
 
 	[SyncVar]
 	public float frequency;
 
-	protected void Start () {
-		network = GameObject.Find("Network").GetComponent<Network>();
-	}
+    protected void Start()
+    {
+        network = GameObject.Find("Network").GetComponent<Network>();
+        if (isServer)
+        {
+            StartCoroutine(ReportCycle());
+        }
+    }
 
-	private void Update()
-	{
-		if (isServer)
-		{
-			if (Time.time >= last_message_time + 1/frequency)
-			{
-				last_message_time = Time.time;
-
-				Report();
-			}
-		}
-	}
+    private IEnumerator ReportCycle()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1 / frequency);
+            Report();
+        }
+    }
 
 	protected virtual void Report()
 	{

@@ -18,11 +18,11 @@ public abstract class Button : NetworkBehaviour {
 	new private Light light;
 
 	[Header("Glow Settings")]
-	[ColorUsage(true, true, 0f, 8,.125f, 3f)]
+	[ColorUsage(true, true)]
 	public Color unlit_color;
-	[ColorUsage(true, true, 0f, 8, .125f, 3f)]
+	[ColorUsage(true, true)]
 	public Color lit_color;
-	[ColorUsage(true, true, 0f, 8, .125f, 3f)]
+	[ColorUsage(true, true)]
 	public Color button_unlit_color;
 	private bool lit = false;
 

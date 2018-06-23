@@ -13,7 +13,7 @@ public class RotationReporter : Reporter {
 	{
 		Vector3 rotation = rotationCalculator.current_rotation;
 
-		network.AddData(new FloatData(x_displays, rotation.x, category, size));
+        network.AddData(new FloatData(x_displays, rotation.x, category, size));
 		network.AddData(new FloatData(y_displays, rotation.y, category, size));
 		network.AddData(new FloatData(z_displays, rotation.z, category, size));
 	}
