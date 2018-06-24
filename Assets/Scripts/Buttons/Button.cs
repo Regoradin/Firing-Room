@@ -24,7 +24,7 @@ public abstract class Button : NetworkBehaviour {
 	public Color lit_color;
 	[ColorUsage(true, true)]
 	public Color button_unlit_color;
-	private bool lit = false;
+	public bool lit = false;
 
 	[Header("Animation Settings")]
 	private Animator anim;
