@@ -106,6 +106,7 @@ public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 	/// </summary>
 	public void SwitchMode(bool b)
 	{
+        Debug.Log("attempting to switch mode");
 		if (is_uplink)
 		{
 			StartCoroutine(SwitchToDownlink());
@@ -118,20 +119,24 @@ public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 
 	private IEnumerator SwitchToDownlink()
 	{
-		while(tasks_on_line.Count != 0)
+        active = false;
+        is_uplink = false;
+        while (tasks_on_line.Count != 0 && !is_uplink)
 		{
 			yield return null;
 		}
-		is_uplink = false;
+        active = true;
 	}
 
 	private IEnumerator SwitchToUplink()
 	{
-		while (data_on_line.Count != 0)
+        active = false;
+        is_uplink = true;
+        while (data_on_line.Count != 0 && is_uplink)
 		{
 			yield return null;
 		}
-		is_uplink = true;
+        active = true;
 	}
 
 	//TASK UPLOADING
