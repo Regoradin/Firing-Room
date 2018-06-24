@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DatalineSelector : MonoBehaviour, IIntTaskable {
+public class DatalineSelector : MonoBehaviour, IIntTaskable, IStringTaskable {
 
     public List<Dataline> datalines;
     public List<GameObject> display_objects;
@@ -32,6 +32,20 @@ public class DatalineSelector : MonoBehaviour, IIntTaskable {
             {
                 display.state = true;
             }
+        }
+    }
+    /// <summary>
+    /// for switching categories
+    /// </summary>
+    public void StringTask(string category)
+    {
+        if (selected_line.categories_enabled.Contains(category))
+        {
+            selected_line.categories_enabled.Remove(category);
+        }
+        else
+        {
+            selected_line.categories_enabled.Add(category);
         }
     }
 
