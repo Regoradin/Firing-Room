@@ -23,6 +23,14 @@ public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 	private bool downloading = false;
 	private List<Data> data_on_line;
 
+    public int Buffer
+    {
+        get
+        {
+            return task_buffer.Count > data_buffer.Count ? task_buffer.Count : data_buffer.Count;
+        }
+    }
+
 	public delegate void TaskHandler(Task task);
 	public event TaskHandler EventTaskUploaded;
 	public delegate void DataHandler(Data data);
@@ -30,8 +38,8 @@ public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 
 	[SyncVar(hook = "SwitchMode")]
 	private bool switch_triggered = false;
-	[SyncVar (hook = "ClearLine")]
-	private bool clear_triggered = false;
+    [SyncVar(hook = "ClearLine")]
+    private bool clear_triggered = false;
 
 	public void BoolTask(bool b)
 	{
@@ -85,14 +93,14 @@ public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 
 	private void Update()
 	{
-		if (is_uplink)
+		if (task_buffer.Count > 0)
 		{
 			if (!uploading)
 			{
 				Upload();
 			}
 		}
-		else
+		if(data_buffer.Count > 0)
 		{
 			if (!downloading)
 			{
@@ -106,7 +114,6 @@ public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 	/// </summary>
 	public void SwitchMode(bool b)
 	{
-        Debug.Log("attempting to switch mode");
 		if (is_uplink)
 		{
 			StartCoroutine(SwitchToDownlink());
@@ -121,7 +128,7 @@ public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 	{
         active = false;
         is_uplink = false;
-        while (tasks_on_line.Count != 0 && !is_uplink)
+        while ((tasks_on_line.Count != 0 || task_buffer.Count != 0) && !is_uplink)
 		{
 			yield return null;
 		}
@@ -132,7 +139,7 @@ public class Dataline : NetworkBehaviour, IBoolTaskable, IStringTaskable
 	{
         active = false;
         is_uplink = true;
-        while (data_on_line.Count != 0 && is_uplink)
+        while ((data_on_line.Count != 0 || data_buffer.Count != 0) && is_uplink) 
 		{
 			yield return null;
 		}
