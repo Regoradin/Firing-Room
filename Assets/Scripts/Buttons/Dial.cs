@@ -2,19 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Dial : MonoBehaviour {
+public class Dial : NetworkBehaviour {
 
 	public float scroll_increment;
 
 	public float value_increment;
-	public float max_value;
 	public float min_value;
+    public float max_value;
+    public bool wrap;
 
+    public List<Text> texts;
+
+    [SyncVar]
 	private float value;
 	public float Value { get { return value; } }
 
-	private void OnMouseOver()
+    private void Start()
+    {
+        foreach(Text text in texts)
+        {
+            text.text = value.ToString();
+        }
+    }
+
+    private void OnMouseOver()
 	{
 		float scroll_amount = Input.GetAxis("Mouse ScrollWheel");
 
@@ -26,6 +40,11 @@ public class Dial : MonoBehaviour {
 		{
 			ScrollDown(scroll_amount);
 		}
+
+        foreach(Text text in texts)
+        {
+            text.text = value.ToString();
+        }
 	}
 
 	//Rotates around the local Y axis
@@ -33,19 +52,19 @@ public class Dial : MonoBehaviour {
 	{
 		transform.Rotate(Vector3.up * scroll_increment);
 		value += value_increment;
-		if (value >= max_value)
-		{
-			value = max_value;
-		}
+        if (value > max_value)
+        {
+            value = wrap ? value - max_value + min_value - value_increment : max_value;
+        }
 	}
 
 	protected void ScrollDown(float scroll_amount)
 	{
 		transform.Rotate(Vector3.up * -scroll_increment);
 		value -= value_increment;
-		if (value <= min_value)
+		if (value < min_value)
 		{
-			value = min_value;
+            value = wrap ? value + max_value - min_value + value_increment: min_value;
 		}
 	}
 }

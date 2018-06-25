@@ -23,6 +23,8 @@ public class Antenna : NetworkBehaviour, IVector3Taskable {
 	public bool is_home_antenna;
 	public bool is_ship_antenna;
 
+    public int index;
+
 	private AntennaManager manager;
 	[HideInInspector]
 	public Antenna connected_ant;
