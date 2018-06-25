@@ -9,6 +9,7 @@ public class AntennaController : NetworkBehaviour, IIntTaskable, IVector3Taskabl
     public AntennaManager manager;
     public BoolDisplay connected_display;   //if the index connected to an antenna
     public BoolDisplay linked_display;  //if a full path to ship is established
+    public BoolDisplay antenna_linked_display; //if the selected antenna is connected to another antenna
 
     private Antenna connected_ant;
 
@@ -48,6 +49,14 @@ public class AntennaController : NetworkBehaviour, IIntTaskable, IVector3Taskabl
         else
         {
             linked_display.state = true;
+        }
+        if (connected_ant.connected_ant != null)
+        {
+            antenna_linked_display.state = true;
+        }
+        else
+        {
+            antenna_linked_display.state = false;
         }
     }
 
