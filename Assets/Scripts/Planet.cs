@@ -32,12 +32,12 @@ public class Planet : MonoBehaviour
 
 	public void OnTriggerEnter(Collider other)
 	{
-		other.GetComponent<PlanetManager>().planet = this;
+		other.GetComponent<PlanetManager>().Planet = this;
 	}
 
 	public void OnTriggerExit(Collider other)
 	{
-		other.GetComponent<PlanetManager>().planet = parent_body.GetComponent<Planet>() ;
+		other.GetComponent<PlanetManager>().Planet = parent_body.GetComponent<Planet>() ;
 	}
 
 }

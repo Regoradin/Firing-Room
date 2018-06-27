@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class PlanetManager : MonoBehaviour {
 
-	public Planet planet;
+	private Planet planet;
+	public Planet Planet
+	{
+		get { return planet; }
+		set
+		{
+			planet = value;
+			planet_zone_manager = planet.GetComponent<ZoneManager>();
+		}
+	}
+	ZoneManager planet_zone_manager;
 	public Planet default_planet;
 
 	public List<Rigidbody> rbs;
@@ -26,6 +36,7 @@ public class PlanetManager : MonoBehaviour {
 	public Vector3 Gravity()
 	{
 		float grav_constant = 1000;
+
 
 		Vector3 direction = (planet.transform.position - transform.position).normalized;
 		float radius = Vector3.Distance(planet.transform.position, transform.position);
