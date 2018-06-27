@@ -14,7 +14,8 @@ public class PlanetManager : MonoBehaviour {
 			planet_zone_manager = planet.GetComponent<ZoneManager>();
 		}
 	}
-	ZoneManager planet_zone_manager;
+	private ZoneManager planet_zone_manager;
+    private ZoneManager zone_manager;
 	public Planet default_planet;
 
 	public List<Rigidbody> rbs;
@@ -23,6 +24,8 @@ public class PlanetManager : MonoBehaviour {
 	public void Start()
 	{
 		planet = default_planet;
+        planet_zone_manager = planet.GetComponent<ZoneManager>();
+        zone_manager = GetComponent<ZoneManager>();
 	}
 
 	public void Update()
@@ -33,13 +36,34 @@ public class PlanetManager : MonoBehaviour {
 		}
 	}
 
+    private Vector3 RealPosition()
+    {
+        if (zone_manager.is_focus)
+        {
+            Vector3 real_pos = zone_manager.zone_width * zone_manager.zone_pos + transform.position;
+            return real_pos;
+        }
+        else
+        {
+            Vector3 real_pos = zone_manager.zone_width * zone_manager.zone_pos + zone_manager.remainder_pos;
+            return real_pos;
+        }
+    }
+    private Vector3 RealPlanetPosition()
+    {
+        Vector3 real_pos = planet_zone_manager.zone_width * planet_zone_manager.zone_pos + planet_zone_manager.remainder_pos;
+        return real_pos;
+    }
+
 	public Vector3 Gravity()
 	{
 		float grav_constant = 1000;
 
+        Vector3 position = RealPosition();
+        Vector3 planet_pos = RealPlanetPosition();
 
-		Vector3 direction = (planet.transform.position - transform.position).normalized;
-		float radius = Vector3.Distance(planet.transform.position, transform.position);
+		Vector3 direction = (planet_pos - position).normalized;
+		float radius = Vector3.Distance(planet_pos, position);
 
 
 		float mass = 0;
@@ -55,12 +79,15 @@ public class PlanetManager : MonoBehaviour {
 
 	public Vector3 LatLongAlt()
 	{
-		float altitude = Vector3.Distance(transform.position, planet.transform.position);
+        Vector3 position = RealPosition();
+        Vector3 planet_pos = RealPlanetPosition();
+
+        float altitude = Vector3.Distance(position, planet_pos);
 		altitude -= planet.sea_level_radius;
 
-		float x_dist = transform.position.x - planet.transform.position.x;
-		float y_dist = transform.position.y - planet.transform.position.y;
-		float z_dist = transform.position.z - planet.transform.position.z;
+		float x_dist = position.x - planet_pos.x;
+		float y_dist = position.y - planet_pos.y;
+		float z_dist = position.z - planet_pos.z;
 
 		float latitude = Mathf.Rad2Deg * Mathf.Atan2(y_dist, Mathf.Sqrt((x_dist * x_dist) + (z_dist * z_dist)));
 		float longitude = Mathf.Rad2Deg * Mathf.Atan2(z_dist, Mathf.Sqrt((x_dist * x_dist) + (y_dist * y_dist)));
