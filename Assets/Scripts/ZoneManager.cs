@@ -25,11 +25,7 @@ public class ZoneManager : MonoBehaviour {
         {
             zone_pos = Vector3.zero;
             //this makes sure that the focus gameobject cannot collide with any focusignored objects, keeping space and time consistent
-            gameObject.layer = 11;
-            foreach(Transform child in transform)
-            {
-                child.gameObject.layer = 11;
-            }
+            RecursiveSetLayer(transform, 11);
         }
 
         else
@@ -57,10 +53,11 @@ public class ZoneManager : MonoBehaviour {
            new_zone.y >= zone_pos.y - 1 && new_zone.y <= zone_pos.y + 1 &&
            new_zone.z >= zone_pos.z - 1 && new_zone.z <= zone_pos.z + 1)
         {
-            gameObject.layer = 0;
-            foreach (Transform child in transform)
+            //changing layers to be in the same plane of existence as the focus
+            RecursiveSetLayer(transform, 0);
+            foreach (Camera cam in GetComponentsInChildren<Camera>())
             {
-                child.gameObject.layer = 0;
+                cam.cullingMask = cam.cullingMask | 1 << 11;
             }
             
 
@@ -76,11 +73,21 @@ public class ZoneManager : MonoBehaviour {
 
         else
         {
-            gameObject.layer = 10;
-            foreach (Transform child in transform)
+            //shifting out of the same plane of existence as the focus
+            RecursiveSetLayer(transform, 10);
+            foreach (Camera cam in GetComponentsInChildren<Camera>())
             {
-                child.gameObject.layer = 10;
+                cam.cullingMask = cam.cullingMask & ~(1 << 11);
             }
+        }
+    }
+
+    private void RecursiveSetLayer(Transform root, int layer)
+    {
+        root.gameObject.layer = layer;
+        foreach(Transform child in root)
+        {
+            RecursiveSetLayer(child, layer);
         }
     }
 
