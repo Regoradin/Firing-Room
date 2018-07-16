@@ -11,6 +11,7 @@ public class PositionReporter : Reporter {
 
 	protected override void Report()
 	{
+        Debug.Log(manager.LatLongAlt());
 		network.AddData(new FloatData(x_displays, manager.LatLongAlt().x, category, size));
 		network.AddData(new FloatData(y_displays, manager.LatLongAlt().y, category, size));
 		network.AddData(new FloatData(z_displays, manager.LatLongAlt().z, category, size));
