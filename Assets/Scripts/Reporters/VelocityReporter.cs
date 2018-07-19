@@ -3,49 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class VelocityReporter : Reporter, ITriggerTaskable {
+public class VelocityReporter : Reporter {
 
-	public List<FloatDisplay> displays;
+    public PlanetManager manager;
+    public List<FloatDisplay> x_displays, y_displays, z_displays;
+    private Vector3 old_pos;
 
-	private Rigidbody rb;
-
-	private Rigidbody reference_rb;  //the rigidbody that has the reference 0 velocity;
-	public Rigidbody reference_rb_t;
-	public Rigidbody reference_rb_f;
 	public string category;
 	public float size;
-
-	[HideInInspector]
-	[SyncVar(hook = "SetReference")]
-	public bool rb_choice = true;
-
-	private void SetReference(bool b)
-	{
-		rb_choice = b;
-		reference_rb = rb_choice ? reference_rb_t : reference_rb_f;
-	}
-	public void TriggerTask()
-	{
-		rb_choice = !rb_choice;
-	}
-
 
 
 	private void Awake()
 	{
-		rb = GetComponentInParent<Rigidbody>();
-	}
+        old_pos = Vector3.zero;
+    }
 
 	protected override void Report()
 	{
+        Vector3 new_pos = manager.LatLongAlt();
+        Vector3 velocity = new_pos - old_pos;
+        old_pos = new_pos;
 
-		float calculated_velocity = rb.velocity.magnitude;
-		if(reference_rb != null)
-		{
-			calculated_velocity = (rb.velocity - reference_rb.velocity).magnitude;
-		}
-
-		network.AddData(new FloatData(displays, calculated_velocity, category, size));
+        network.AddData(new FloatData(x_displays, velocity.x, category, size));
+        network.AddData(new FloatData(y_displays, velocity.y, category, size));
+        network.AddData(new FloatData(z_displays, velocity.z, category, size));
 	}
 
 }

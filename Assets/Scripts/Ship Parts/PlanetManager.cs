@@ -90,10 +90,8 @@ public class PlanetManager : MonoBehaviour {
 		float z_dist = position.z - planet_pos.z;
 
         float latitude = Mathf.Rad2Deg * Mathf.Atan2(y_dist, Mathf.Sqrt((x_dist * x_dist) + (z_dist * z_dist)));
-        //float longitude = Mathf.Rad2Deg * Mathf.Atan2(z_dist, Mathf.Sqrt((x_dist * x_dist) + (y_dist * y_dist)));
         float longitude = Mathf.Rad2Deg * Mathf.Atan2(z_dist, x_dist);
 
-        Debug.Log("lat: " + latitude + " long: " + longitude + " alt: " + altitude);
 
 
         if (x_dist < 0)
