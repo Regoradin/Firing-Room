@@ -5,7 +5,7 @@ using UnityEngine;
 public class ZoneManager : MonoBehaviour {
 
     public float zone_width;
-  //  [HideInInspector]
+    //[HideInInspector]
     public Vector3 zone_pos;
     //[HideInInspector]
     public Vector3 remainder_pos;
