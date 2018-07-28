@@ -6,15 +6,15 @@ using UnityEngine.Networking;
 public class Bolt : NetworkBehaviour, IBoolTaskable {
 
 	[SyncVar]
-	private bool armed = false;
-	[SyncVar(hook = "Break")]
+	public bool armed = false;
+	[SyncVar]
 	public bool broken = false;
 
 	public void BoolTask(bool b)
 	{
 		if (b)
 		{
-			broken = true;
+            Break();
 		}
 		else
 		{
@@ -22,9 +22,9 @@ public class Bolt : NetworkBehaviour, IBoolTaskable {
 		}
 	}
 
-	private void Break(bool b)
+	private void Break()
 	{
-		if(b && armed)
+		if(armed)
 		{
 			broken = true;
 		}

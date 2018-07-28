@@ -6,12 +6,11 @@ using UnityEngine.Networking;
 public class StagingBolts : NetworkBehaviour {
 
 	private List<Bolt> bolts;
-	private Staging staging;
+	public Staging staging;
 
 	private void Awake()
 	{
 		bolts = new List<Bolt>();
-		staging = GetComponent<Staging>();
 
 		foreach(Bolt bolt in gameObject.GetComponents<Bolt>())
 		{
@@ -38,7 +37,8 @@ public class StagingBolts : NetworkBehaviour {
 		
 		if(unbroken_bolts == 0)
 		{
-			staging.Stage(false);
+            staging.connected = false;
+            Destroy(this);
 		}
 	}
 

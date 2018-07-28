@@ -12,7 +12,7 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 
 	
 	[SyncVar(hook = "HookStage")]
-	private bool connected = true;
+	public bool connected = true;
 	public void TriggerTask()
 	{
 		connected = false;
@@ -21,14 +21,14 @@ public class Staging : NetworkBehaviour, ITriggerTaskable
 	/// <summary>
 	/// this only exists to deal with that pesky optional bool that apparently breaks the function signature.
 	/// </summary>
-	public void HookStage(bool b)
+	private void HookStage(bool b)
 	{
 		Stage(false);
 	}
 
-	public void Stage(bool b, bool breaking = true)
+    private void Stage(bool b, bool breaking = true)
 	{
-		Debug.Log("stage: " + name);
+        Debug.Log("Staging: " + name);
 		connected = b;
 		if (!connected)
 		{
