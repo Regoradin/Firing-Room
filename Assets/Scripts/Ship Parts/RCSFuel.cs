@@ -5,7 +5,7 @@ using UnityEngine;
 public class RCSFuel : MonoBehaviour {
 
 	public float max_fuel;
-	private float fuel;
+	public float fuel;
 	public float Fuel
 	{
 		get
