@@ -12,6 +12,7 @@ public class DialstoButton : MonoBehaviour {
     {
         Vector3Button vector_button = button as Vector3Button;
         IntButton int_button = button as IntButton;
+        FloatButton float_button = button as FloatButton;
 
         if (vector_button != null)
         {
@@ -20,6 +21,10 @@ public class DialstoButton : MonoBehaviour {
         if (int_button != null)
         {
             int_button.value = int.Parse(dials[0].Value.ToString() + dials[1].Value.ToString() + dials[2].Value.ToString());
+        }
+        if(float_button != null)
+        {
+            float_button.value = (float)dials[0].Value;
         }
     }
 

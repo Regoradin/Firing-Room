@@ -11,7 +11,14 @@ public class RCS : NetworkBehaviour, ITriggerTaskable, IFloatTaskable {
 
 	private Rigidbody rb;
 	private bool is_maneuvering = false;
-	private bool fueled = true;
+    public bool Is_maneuvering
+    {
+        get
+        {
+            return is_maneuvering;
+        }
+    }
+    private bool fueled = true;
 
 	private bool is_burning;
 	private bool is_anti;

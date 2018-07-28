@@ -29,23 +29,29 @@ public class Dial : NetworkBehaviour {
     }
 
     private void OnMouseOver()
-	{
-		float scroll_amount = Input.GetAxis("Mouse ScrollWheel");
+    {
+        float scroll_amount = Input.GetAxis("Mouse ScrollWheel");
 
-		if (scroll_amount > 0)
-		{
-			ScrollUp(scroll_amount);
-		}
-		if (scroll_amount < 0)
-		{
-			ScrollDown(scroll_amount);
-		}
+        if (scroll_amount > 0)
+        {
+            if (wrap || value != max_value)
+            {
+                ScrollUp(scroll_amount);
+            }
+        }
+        if (scroll_amount < 0)
+        {
+            if (wrap || value != min_value)
+            {
+                ScrollDown(scroll_amount);
+            }
+        }
 
-        foreach(Text text in texts)
+        foreach (Text text in texts)
         {
             text.text = value.ToString();
         }
-	}
+    }
 
 	//Rotates around the local Y axis
 	protected void ScrollUp(float scroll_amount)
