@@ -30,9 +30,14 @@ public abstract class Button : NetworkBehaviour {
 	private Animator anim;
 	public bool light_toggle;
 
-	protected void Start()
+
+  
+    protected void Start()
 	{
-		network = GameObject.Find("Network").GetComponent<Network>();
+        if (isServer)
+        {
+            network = GameObject.Find("Network").GetComponent<Network>();
+        }
 
 		rend = GetComponent<Renderer>();
 		mat = rend.material;
@@ -45,14 +50,19 @@ public abstract class Button : NetworkBehaviour {
 		}
 	}
 
-	protected void OnMouseDown()
-	{
-		//Because NetworkAnimators are weird with triggers.
-		GetComponent<NetworkAnimator>().SetTrigger("ButtonPressed");
-	}
+    protected void OnMouseDown()
+    {
+        //Because NetworkAnimators are weird with triggers.
+        //  GetComponent<NetworkAnimator>().SetTrigger("ButtonPressed");
+        if (hasAuthority)
+        {
+            anim.SetTrigger("ButtonPressed");
+        }
+    }
 
 	protected void ClickEvent()
 	{
+        Debug.Log("CLICK EVENT FIRING from " + name);
 		if (light_toggle)
 		{
 			if (lit)

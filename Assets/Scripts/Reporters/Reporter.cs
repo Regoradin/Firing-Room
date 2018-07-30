@@ -12,9 +12,9 @@ public class Reporter : NetworkBehaviour {
 
     protected void Start()
     {
-        network = GameObject.Find("Network").GetComponent<Network>();
         if (isServer)
         {
+            network = GameObject.Find("Network").GetComponent<Network>();
             StartCoroutine(ReportCycle());
         }
     }

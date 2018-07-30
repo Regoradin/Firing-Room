@@ -15,11 +15,14 @@ public class PlayerAuthSetter : NetworkBehaviour {
 		}
 	}
 
-	[Command]
-	void CmdAssignAuthority(NetworkIdentity net_id)
-	{
-		net_id.RemoveClientAuthority(net_id.clientAuthorityOwner);
-		net_id.AssignClientAuthority(connectionToClient);
-	}
+    [Command]
+    void CmdAssignAuthority(NetworkIdentity net_id)
+    {
+        //if (net_id.clientAuthorityOwner != null)
+        //{
+            net_id.RemoveClientAuthority(net_id.clientAuthorityOwner);
+        ///}
+        net_id.AssignClientAuthority(connectionToClient);
+    }
 
 }
