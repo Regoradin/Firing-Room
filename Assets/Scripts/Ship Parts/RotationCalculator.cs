@@ -22,7 +22,10 @@ public class RotationCalculator : MonoBehaviour {
 	private void Update()
 	{
 		//Keeps the gyro pointed towards velocity
-		transform.rotation = Quaternion.LookRotation(rb.velocity);
+		if (rb.velocity != Vector3.zero)
+		{
+			transform.rotation = Quaternion.LookRotation(rb.velocity);
+		}
 
 		current_rotation = CalculateRotation();
 	}

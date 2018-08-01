@@ -56,7 +56,8 @@ public abstract class Button : NetworkBehaviour {
         //  GetComponent<NetworkAnimator>().SetTrigger("ButtonPressed");
         if (hasAuthority)
         {
-            anim.SetTrigger("ButtonPressed");
+			NetworkAnimator net_anim = GetComponent<NetworkAnimator>();
+            net_anim.SetTrigger("ButtonPressed");
         }
     }
 

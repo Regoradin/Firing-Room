@@ -50,7 +50,7 @@ public class AntennaController : NetworkBehaviour, IIntTaskable, IVector3Taskabl
         {
             linked_display.state = true;
         }
-        if (connected_ant.connected_ant != null)
+        if (connected_ant != null && connected_ant.connected_ant != null)
         {
             antenna_linked_display.state = true;
         }

@@ -19,7 +19,7 @@ public class CategoryDisplayer : MonoBehaviour {
 
     private void Update()
     {
-        if (selector.selected_line.categories_enabled.Contains(category))
+        if (selector.selected_line != null && selector.selected_line.categories_enabled.Contains(category))
         {
             foreach (BoolDisplay display in displays)
             {
